@@ -1,0 +1,33 @@
+/* Active link styles */
+.active {
+    color: #1e40af;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: 2px solid #1e40af;
+    padding: 4px 8px;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    background-color: #93c5fd; 
+}
+
+.active:hover {
+    color: #1e40af;
+    background-color: #bfdbfe;
+    border-color: #1e40af;
+    text-decoration-thickness: 3px;
+}
+
+/* Navbar link */
+.menu a {
+    color: #333;
+    padding: 4px 8px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+}
+
+.menu a:hover {
+    color: #1e40af;
+    border-color: #3b82f6;
+    background-color: #bfdbfe;
+}
