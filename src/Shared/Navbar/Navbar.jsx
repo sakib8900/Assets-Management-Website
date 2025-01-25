@@ -6,8 +6,9 @@ const Navbar = () => {
     const links = 
     <>
       <NavLink to="/">Home</NavLink>
-            <NavLink to="/joinAsEmp">Join as Employee</NavLink>
-            <NavLink to="/joinAsHr">Join as HR Manager</NavLink>
+            <NavLink to="/employeeForm">Join as Employee</NavLink>
+            <NavLink to="/hrForm">Join as HR Manager</NavLink>
+            <NavLink to="/login">Login</NavLink>
     </>
     return (
         <div className="navbar bg-blue-300">
@@ -33,7 +34,8 @@ const Navbar = () => {
                         {links}
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-xl"></a>
+                {/* TODO dynamic korbo pore */}
+                <a className="btn btn-ghost text-2xl">XYZ</a>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">

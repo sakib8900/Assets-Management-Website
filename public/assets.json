@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Laptop",
+    "type": "Returnable",
+    "quantity": 10,
+    "addedDate": "2025-01-01"
+  },
+  {
+    "name": "Office Chair",
+    "type": "Non-returnable",
+    "quantity": 25,
+    "addedDate": "2025-01-03"
+  },
+  {
+    "name": "Projector",
+    "type": "Returnable",
+    "quantity": 5,
+    "addedDate": "2025-01-05"
+  },
+  {
+    "name": "Whiteboard",
+    "type": "Non-returnable",
+    "quantity": 12,
+    "addedDate": "2025-01-07"
+  },
+  {
+    "name": "Keyboard",
+    "type": "Returnable",
+    "quantity": 20,
+    "addedDate": "2025-01-10"
+  }
+]
