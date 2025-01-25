@@ -8,6 +8,7 @@ import HrForm from "../pages/Hr/HrForm/HrForm";
 import EmployeeForm from "../pages/Employee/EmployeeForm/EmployeeForm";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
+import AddAssets from "../pages/Hr/AddAssets/AddAssets";
   
   export const router = createBrowserRouter([
     {
@@ -34,6 +35,10 @@ import Signup from "../pages/Signup/Signup";
         {
           path: "assets",
           element: <AssetsList></AssetsList>
+        },
+        {
+          path: "addAssets",
+          element: <AddAssets></AddAssets>
         },
         // employee
         {

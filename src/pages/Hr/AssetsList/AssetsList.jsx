@@ -6,40 +6,19 @@ import useAssets from "../../../hooks/useAssets";
 import Loading from "../../../Shared/Loading/Loading";
 
 const AssetsList = () => {
-    const [assets, loading] = useAssets();
-    const [filteredAssets, setFilteredAssets] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [stockFilter, setStockFilter] = useState("");
     const [typeFilter, setTypeFilter] = useState("");
     const [sortOption, setSortOption] = useState("");
 
-    // Apply Filters and Sorting
-    const applyFiltersAndSort = (data) => {
-        let filteredData = [...data];
-        if (sortOption === "quantity") {
-            filteredData.sort((a, b) => a.quantity - b.quantity);
-        }
-        setFilteredAssets(filteredData);
-    };
-
-    useEffect(() => {
-        const filtered = assets.filter((asset) => {
-            const matchesSearch = asset.name.toLowerCase().includes(searchTerm);
-            const matchesStock =
-                stockFilter === "" ||
-                (asset.quantity > 0 && stockFilter === "available") ||
-                (asset.quantity === 0 && stockFilter === "out-of-stock");
-            const matchesType =
-                typeFilter === "" || asset.type.toLowerCase() === typeFilter;
-
-            return matchesSearch && matchesStock && matchesType;
-        });
-
-        applyFiltersAndSort(filtered);
-    }, [searchTerm, stockFilter, typeFilter, sortOption, assets]);
+    const { assets, loading, error } = useAssets(searchTerm, stockFilter, typeFilter, sortOption);
 
     if (loading) {
-        return <Loading></Loading>
+        return <Loading />;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
     }
 
     return (
@@ -53,17 +32,19 @@ const AssetsList = () => {
                     subHeading={"Manage Your Resources"}
                 />
             </div>
+
             {/* Search Section */}
             <div className="my-4">
                 <input
                     type="text"
                     placeholder="Search by Name"
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                     className="border p-2 rounded w-full"
                 />
             </div>
-            {/* Filter */}
+
+            {/* Filter Section */}
             <div className="flex gap-4 my-4">
                 <select
                     value={stockFilter}
@@ -76,7 +57,7 @@ const AssetsList = () => {
                 </select>
                 <select
                     value={typeFilter}
-                    onChange={(e) => setTypeFilter(e.target.value.toLowerCase())}
+                    onChange={(e) => setTypeFilter(e.target.value)}
                     className="border p-2 rounded"
                 >
                     <option value="">Asset Type</option>
@@ -95,6 +76,7 @@ const AssetsList = () => {
                     <option value="quantity">Quantity</option>
                 </select>
             </div>
+
             {/* Table Section */}
             <div className="overflow-x-auto">
                 <table className="table w-full">
@@ -109,7 +91,7 @@ const AssetsList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredAssets.map((asset, idx) => (
+                        {assets.map((asset, idx) => (
                             <tr key={asset._id}>
                                 <td>{idx + 1}</td>
                                 <td>{asset.name}</td>
