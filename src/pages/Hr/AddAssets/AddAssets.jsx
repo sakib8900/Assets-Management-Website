@@ -10,8 +10,11 @@ const AddAssets = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const updatedValue = name === "quantity" ? Number(value) : value;
+  
+    setFormData({ ...formData, [name]: updatedValue });
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,20 +84,6 @@ const AddAssets = () => {
             value={formData.quantity}
             onChange={handleChange}
             placeholder="Enter quantity"
-            className="input input-bordered w-full"
-          />
-        </div>
-
-        {/* Date Picker */}
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Added Date</span>
-          </label>
-          <input
-            type="date"
-            name="addedDate"
-            value={formData.addedDate}
-            onChange={handleChange}
             className="input input-bordered w-full"
           />
         </div>

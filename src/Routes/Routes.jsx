@@ -9,6 +9,10 @@ import EmployeeForm from "../pages/Employee/EmployeeForm/EmployeeForm";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
 import AddAssets from "../pages/Hr/AddAssets/AddAssets";
+import PrivateRoute from "./PrivateRoute";
+import Profile from "../pages/Profile/Profile";
+import Payment from "../pages/Payment/Payment";
+
   
   export const router = createBrowserRouter([
     {
@@ -27,10 +31,19 @@ import AddAssets from "../pages/Hr/AddAssets/AddAssets";
           path: "signUp",
           element: <Signup></Signup>
         },
+        {
+          path: "profile",
+          element: <Profile></Profile>
+        },
+        {
+          path: "payment",
+          element: <Payment></Payment>
+        },
         // hr
         {
           path: "hrForm",
-          element: <HrForm></HrForm>
+          element:
+            <HrForm></HrForm>
         },
         {
           path: "assets",

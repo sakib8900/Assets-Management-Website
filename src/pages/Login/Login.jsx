@@ -2,9 +2,16 @@ import React, { useContext } from 'react';
 import loginLottie from "../../assets/lootie/login.json"
 import Lottie from 'lottie-react';
 import { AuthContext } from '../../providers/AuthProvider';
+import Swal from 'sweetalert2';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const {signIn} = useContext(AuthContext)
+    const navigate = useNavigate()
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || "/"
+
     const handleLogin = e =>{
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -14,6 +21,14 @@ const Login = () => {
         .then(res =>{
             const user = res.user;
             console.log(user);
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Login successfully",
+                showConfirmButton: false,
+                timer: 1500
+              });
+              navigate(from, {replace: true})
         })
     }
     return (

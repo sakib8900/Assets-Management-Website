@@ -3,21 +3,18 @@ import { Helmet } from "react-helmet";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { data, NavLink, useNavigate } from "react-router-dom";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const HrForm = () => {
-  const { createUser } = useContext(AuthContext);
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const { createUser, updateUserProfile } = useContext(AuthContext);
+  const { register, handleSubmit, setValue, reset, watch, formState: { errors } } = useForm();
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate()
 
+  // console.log(user);
   // Handle image upload
   const handleImageUpload = async (file, fieldName) => {
     const formData = new FormData();
@@ -37,46 +34,27 @@ const HrForm = () => {
     }
   };
 
-  const companyLogoFile = watch("companyLogo");
-  const userImageFile = watch("userImage");
+  const photoURLFile = watch("photoURL");
 
   // Submit handler
   const onSubmit = async (formData) => {
-    const {
-      fullName,
-      companyName,
-      companyLogo,
-      userImage,
-      email,
-      password,
-      dob,
-      package: selectedPackage,
-    } = formData;
-
-    const payload = {
-      fullName,
-      companyName,
-      companyLogo,
-      userImage,
-      email,
-      dob,
-      selectedPackage,
-    };
-    console.log(payload);
+    const { fullName, companyName, photoURL, email, password, dob, package: selectedPackage } = formData;
+    const payload = { fullName, companyName, photoURL, email, dob, selectedPackage };
     try {
       setIsLoading(true);
       await createUser(email, password);
+      await updateUserProfile(fullName, photoURL);
       Swal.fire({
         position: "top-end",
         icon: "success",
         title: "User registered successfully!",
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
       });
-      console.log("Form Data:", payload);
+      reset();
+      navigate('/')
     } catch (error) {
-      // console.error("Error creating user:", error.message);
-      // alert("Registration failed. Please try again.");
+      console.error("Error creating user:", error.message);
     } finally {
       setIsLoading(false);
     }
@@ -121,22 +99,20 @@ const HrForm = () => {
 
         {/* Company Logo */}
         <div className="mb-4">
-          <label htmlFor="companyLogo" className="block text-gray-700 font-medium mb-2">
+          <label htmlFor="photoURL" className="block text-gray-700 font-medium mb-2">
             Company Logo
           </label>
           <input
             type="file"
-            id="companyLogo"
-            onChange={(e) => handleImageUpload(e.target.files[0], "companyLogo")}
+            id="photoURL"
+            onChange={(e) => handleImageUpload(e.target.files[0], "photoURL")}
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
-          {companyLogoFile && (
-            <p className="text-green-500 text-sm">Company Logo selected for upload</p>
-          )}
+          {photoURLFile && <p className="text-green-500 text-sm">Logo selected</p>}
         </div>
 
         {/* User Image */}
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label htmlFor="userImage" className="block text-gray-700 font-medium mb-2">
             User Image
           </label>
@@ -149,7 +125,7 @@ const HrForm = () => {
           {userImageFile && (
             <p className="text-green-500 text-sm">User Image selected for upload</p>
           )}
-        </div>
+        </div> */}
 
         {/* Email */}
         <div className="mb-4">
@@ -178,16 +154,16 @@ const HrForm = () => {
               minLength: 6,
               maxLength: 20,
               pattern: /(?=.*\d)(?=.*[!@#$%^&*])(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])/
-          })}
-              placeholder="password" className="input input-bordered" />
+            })}
+            placeholder="password" className="input input-bordered" />
           {errors.password?.type === 'required' && <p
-              className='text-red-600'>Password is required</p>}
+            className='text-red-600'>Password is required</p>}
           {errors.password?.type === 'maxLength' && <p
-              className='text-red-600'>Password must be less then 20 characters</p>}
+            className='text-red-600'>Password must be less then 20 characters</p>}
           {errors.password?.type === 'minLength' && <p
-              className='text-red-600'>Password must be 6 characters</p>}
+            className='text-red-600'>Password must be 6 characters</p>}
           {errors.password?.type === 'pattern' && <p
-              className='text-red-600'>Password must have one lower case and one higher case characters</p>}
+            className='text-red-600'>Password must have one lower case and one higher case characters</p>}
         </div>
         {/* Date of Birth */}
         <div className="mb-4">
@@ -221,18 +197,8 @@ const HrForm = () => {
           </select>
           {errors.package && <p className="text-red-500 text-sm">{errors.package.message}</p>}
         </div>
-
-        {/* Submit Button */}
-        <div className="text-center">
-          <button
-            type="submit"
-            className={`px-6 py-2 ${isLoading ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
-              } text-white rounded-md transition`}
-            disabled={isLoading}
-          >
-            {isLoading ? "Loading..." : "Register"}
-          </button>
-        </div>
+        {/* submit */}
+        <button className="btn btn-primary">Payment</button>     
       </form>
     </div>
   );

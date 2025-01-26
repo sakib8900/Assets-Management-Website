@@ -1,15 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import './Navbar.css'
+import { AuthContext } from '../../providers/AuthProvider';
 
 const Navbar = () => {
-    const links = 
-    <>
-      <NavLink to="/">Home</NavLink>
+    const { user, logOut} = useContext(AuthContext)
+    const handleLogOut = () =>{
+        logOut()
+        .then(() => {})
+    }
+    const links =
+        <>
+            <NavLink to="/">Home</NavLink>
             <NavLink to="/employeeForm">Join as Employee</NavLink>
             <NavLink to="/hrForm">Join as HR Manager</NavLink>
-            <NavLink to="/login">Login</NavLink>
-    </>
+            {
+                    user ? <>
+                    <NavLink to="/profile">Profile</NavLink>
+                    </> : <>
+                       
+                    </>
+                }
+        </>
     return (
         <div className="navbar bg-blue-300">
             <div className="navbar-start">
@@ -35,7 +47,11 @@ const Navbar = () => {
                     </ul>
                 </div>
                 {/* TODO dynamic korbo pore */}
-                <a className="btn btn-ghost text-2xl">XYZ</a>
+                <img
+                    src={user?.photoURL || 'https://via.placeholder.com/150'}
+                    alt="User Profile"
+                    className="w-12 h-12 rounded-full"
+                />
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
@@ -43,7 +59,15 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">Button</a>
+                {
+                    user ? <>
+                    <button onClick={handleLogOut} className='btn btn-ghost'>Logout</button>
+                    </> : <>
+                        <button className='btn btn-error'>
+                            <NavLink to="/login">Login</NavLink>
+                        </button>
+                    </>
+                }
             </div>
         </div>
     );

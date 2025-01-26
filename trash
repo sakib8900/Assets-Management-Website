@@ -1,0 +1,12 @@
+<!-- <div className="text-center">
+          <NavLink>
+          <button
+            type="submit"
+            className={`px-6 py-2 ${isLoading ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
+              } text-white rounded-md transition`}
+            disabled={isLoading}
+          >
+            {isLoading ? "Loading..." : "Register"}
+          </button>
+          </NavLink>
+        </div> -->
