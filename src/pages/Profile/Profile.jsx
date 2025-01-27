@@ -12,7 +12,7 @@ const Profile = () => {
     const handleEdit = () => {
         setEditMode(true);
     };
-
+    console.log(user);
     const handleSave = async () => {
         if (user) {
             try {

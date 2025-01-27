@@ -52,18 +52,17 @@ const HrForm = () => {
       dob,
       package: selectedPackage,
     } = formData;
-
+  
     const packageDetails = {
       type: selectedPackage === "basic" ? "5 Members" : selectedPackage === "standard" ? "10 Members" : "20 Members",
       price: selectedPackage === "basic" ? 5 : selectedPackage === "standard" ? 8 : 15,
       limit: selectedPackage === "basic" ? 5 : selectedPackage === "standard" ? 10 : 20,
       currentEmployees: 0, // Default value
     };
-
+  
     const payload = {
       fullName,
       email,
-      password, // Ensure password is hashed before saving in production
       dateOfBirth: dob,
       company: {
         name: companyName,
@@ -72,31 +71,43 @@ const HrForm = () => {
       package: packageDetails,
       role: "hr",
       profilePicture: photoURL,
+      team: []
     };
-
+  
     try {
       setIsLoading(true);
       await createUser(email, password);
       await updateUserProfile(fullName, photoURL);
-
-      // Example: Send `payload` to your backend or database here.
-      console.log("Payload to save:", payload);
-
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "HR Manager registered successfully!",
-        showConfirmButton: false,
-        timer: 1500,
+  
+      // Send data to the backend /hrManager route
+      const response = await fetch("http://localhost:5000/hrManager", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
       });
-      // reset();
-      navigate("/");
+  
+      const result = await response.json();
+      if (response.ok) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "HR Manager registered successfully!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/"); // Redirect to homepage or wherever appropriate
+      } else {
+        throw new Error(result.message || "Failed to save HR Manager data.");
+      }
     } catch (error) {
       console.error("Error creating user:", error.message);
     } finally {
       setIsLoading(false);
     }
   };
+  
 
   return (
     <div className="max-w-lg mx-auto mt-10 p-5 border rounded-lg shadow-lg bg-white">
