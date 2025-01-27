@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import { data, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -12,10 +12,16 @@ const HrForm = () => {
   const { createUser, updateUserProfile } = useContext(AuthContext);
   const { register, handleSubmit, setValue, reset, watch, formState: { errors } } = useForm();
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [isPaymentDone, setIsPaymentDone] = useState(false);
 
-  // console.log(user);
-  // Handle image upload
+  React.useEffect(() => {
+    const paymentStatus = sessionStorage.getItem("paymentDone");
+    if (paymentStatus === "true") {
+      setIsPaymentDone(true);
+    }
+  }, []);
+
   const handleImageUpload = async (file, fieldName) => {
     const formData = new FormData();
     formData.append("image", file);
@@ -36,23 +42,55 @@ const HrForm = () => {
 
   const photoURLFile = watch("photoURL");
 
-  // Submit handler
   const onSubmit = async (formData) => {
-    const { fullName, companyName, photoURL, email, password, dob, package: selectedPackage } = formData;
-    const payload = { fullName, companyName, photoURL, email, dob, selectedPackage };
+    const {
+      fullName,
+      companyName,
+      photoURL,
+      email,
+      password,
+      dob,
+      package: selectedPackage,
+    } = formData;
+
+    const packageDetails = {
+      type: selectedPackage === "basic" ? "5 Members" : selectedPackage === "standard" ? "10 Members" : "20 Members",
+      price: selectedPackage === "basic" ? 5 : selectedPackage === "standard" ? 8 : 15,
+      limit: selectedPackage === "basic" ? 5 : selectedPackage === "standard" ? 10 : 20,
+      currentEmployees: 0, // Default value
+    };
+
+    const payload = {
+      fullName,
+      email,
+      password, // Ensure password is hashed before saving in production
+      dateOfBirth: dob,
+      company: {
+        name: companyName,
+        logo: photoURL,
+      },
+      package: packageDetails,
+      role: "hr",
+      profilePicture: photoURL,
+    };
+
     try {
       setIsLoading(true);
       await createUser(email, password);
       await updateUserProfile(fullName, photoURL);
+
+      // Example: Send `payload` to your backend or database here.
+      console.log("Payload to save:", payload);
+
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: "User registered successfully!",
+        title: "HR Manager registered successfully!",
         showConfirmButton: false,
         timer: 1500,
       });
-      reset();
-      navigate('/')
+      // reset();
+      navigate("/");
     } catch (error) {
       console.error("Error creating user:", error.message);
     } finally {
@@ -111,22 +149,6 @@ const HrForm = () => {
           {photoURLFile && <p className="text-green-500 text-sm">Logo selected</p>}
         </div>
 
-        {/* User Image */}
-        {/* <div className="mb-4">
-          <label htmlFor="userImage" className="block text-gray-700 font-medium mb-2">
-            User Image
-          </label>
-          <input
-            type="file"
-            id="userImage"
-            onChange={(e) => handleImageUpload(e.target.files[0], "userImage")}
-            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
-          {userImageFile && (
-            <p className="text-green-500 text-sm">User Image selected for upload</p>
-          )}
-        </div> */}
-
         {/* Email */}
         <div className="mb-4">
           <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
@@ -153,18 +175,23 @@ const HrForm = () => {
               required: true,
               minLength: 6,
               maxLength: 20,
-              pattern: /(?=.*\d)(?=.*[!@#$%^&*])(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])/
+              pattern: /(?=.*\d)(?=.*[!@#$%^&*])(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])/,
             })}
-            placeholder="password" className="input input-bordered" />
-          {errors.password?.type === 'required' && <p
-            className='text-red-600'>Password is required</p>}
-          {errors.password?.type === 'maxLength' && <p
-            className='text-red-600'>Password must be less then 20 characters</p>}
-          {errors.password?.type === 'minLength' && <p
-            className='text-red-600'>Password must be 6 characters</p>}
-          {errors.password?.type === 'pattern' && <p
-            className='text-red-600'>Password must have one lower case and one higher case characters</p>}
+            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          {errors.password && (
+            <p className="text-red-500 text-sm">
+              {errors.password.type === "required"
+                ? "Password is required"
+                : errors.password.type === "minLength"
+                ? "Password must be at least 6 characters"
+                : errors.password.type === "pattern"
+                ? "Password must include uppercase, lowercase, number, and special character"
+                : ""}
+            </p>
+          )}
         </div>
+
         {/* Date of Birth */}
         <div className="mb-4">
           <label htmlFor="dob" className="block text-gray-700 font-medium mb-2">
@@ -197,8 +224,21 @@ const HrForm = () => {
           </select>
           {errors.package && <p className="text-red-500 text-sm">{errors.package.message}</p>}
         </div>
-        {/* submit */}
-        <button className="btn btn-primary">Payment</button>     
+        {/* Submit */}
+        <NavLink to="/payment">
+          <button className="mb-5 btn btn-primary">Payment</button>
+        </NavLink>
+        <button
+            type="submit"
+            disabled={!isPaymentDone || isLoading}
+            className={`w-full py-2 px-4 rounded ${
+              isPaymentDone
+                ? "bg-blue-500 hover:bg-blue-700 text-white"
+                : "bg-gray-400 text-gray-700 cursor-not-allowed"
+            }`}
+          >
+            Submit
+          </button>
       </form>
     </div>
   );
