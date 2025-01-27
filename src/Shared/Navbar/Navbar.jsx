@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import './Navbar.css'
 import { AuthContext } from '../../providers/AuthProvider';
+import logo from '../../assets/logo.webp'
 
 const Navbar = () => {
     const { user, logOut} = useContext(AuthContext)
@@ -48,7 +49,7 @@ const Navbar = () => {
                 </div>
                 {/* TODO dynamic korbo pore */}
                 <img
-                    src={user?.photoURL || 'https://via.placeholder.com/150'}
+                    src={logo}
                     alt="User Profile"
                     className="w-12 h-12 rounded-full"
                 />

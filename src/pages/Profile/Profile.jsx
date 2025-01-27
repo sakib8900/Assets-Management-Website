@@ -12,7 +12,7 @@ const Profile = () => {
     const handleEdit = () => {
         setEditMode(true);
     };
-    console.log(user);
+    // console.log(user);
     const handleSave = async () => {
         if (user) {
             try {
@@ -35,11 +35,11 @@ const Profile = () => {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
             <div className="bg-white shadow-lg rounded-lg p-6 max-w-sm w-full">
-                <img
+                {/* <img
                     src={user?.photoURL || 'https://via.placeholder.com/150'}
                     alt="User Profile"
                     className="w-32 h-32 rounded-full mx-auto mb-4"
-                />
+                /> */}
                 {editMode ? (
                     <div>
                         <input
@@ -58,9 +58,9 @@ const Profile = () => {
                     </div>
                 ) : (
                     <div className="flex flex-col items-center">
-                        <h2 className="text-xl font-bold text-blue-600 text-center mb-2">
+                        {/* <h2 className="text-xl font-bold text-blue-600 text-center mb-2">
                             Company Image
-                        </h2>
+                        </h2> */}
                         <h2 className="text-xl font-semibold text-center mb-2">
                             Your Name: {user?.displayName || "Anonymous User"}
                         </h2>

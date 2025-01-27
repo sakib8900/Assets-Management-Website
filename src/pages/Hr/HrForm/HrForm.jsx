@@ -1,26 +1,16 @@
-import React, { useContext, useState } from "react";
+// HrForm.jsx
+import React from "react";
 import { Helmet } from "react-helmet";
-import { AuthContext } from "../../../providers/AuthProvider";
 import { useForm } from "react-hook-form";
-import Swal from "sweetalert2";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const HrForm = () => {
-  const { createUser, updateUserProfile } = useContext(AuthContext);
-  const { register, handleSubmit, setValue, reset, watch, formState: { errors } } = useForm();
-  const [isLoading, setIsLoading] = useState(false);
+  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm();
   const navigate = useNavigate();
-  const [isPaymentDone, setIsPaymentDone] = useState(false);
-
-  React.useEffect(() => {
-    const paymentStatus = sessionStorage.getItem("paymentDone");
-    if (paymentStatus === "true") {
-      setIsPaymentDone(true);
-    }
-  }, []);
+  const photoURLFile = watch("photoURL");
 
   const handleImageUpload = async (file, fieldName) => {
     const formData = new FormData();
@@ -40,74 +30,10 @@ const HrForm = () => {
     }
   };
 
-  const photoURLFile = watch("photoURL");
-
-  const onSubmit = async (formData) => {
-    const {
-      fullName,
-      companyName,
-      photoURL,
-      email,
-      password,
-      dob,
-      package: selectedPackage,
-    } = formData;
-  
-    const packageDetails = {
-      type: selectedPackage === "basic" ? "5 Members" : selectedPackage === "standard" ? "10 Members" : "20 Members",
-      price: selectedPackage === "basic" ? 5 : selectedPackage === "standard" ? 8 : 15,
-      limit: selectedPackage === "basic" ? 5 : selectedPackage === "standard" ? 10 : 20,
-      currentEmployees: 0, // Default value
-    };
-  
-    const payload = {
-      fullName,
-      email,
-      dateOfBirth: dob,
-      company: {
-        name: companyName,
-        logo: photoURL,
-      },
-      package: packageDetails,
-      role: "hr",
-      profilePicture: photoURL,
-      team: []
-    };
-  
-    try {
-      setIsLoading(true);
-      await createUser(email, password);
-      await updateUserProfile(fullName, photoURL);
-  
-      // Send data to the backend /hrManager route
-      const response = await fetch("http://localhost:5000/hrManager", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-  
-      const result = await response.json();
-      if (response.ok) {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "HR Manager registered successfully!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        navigate("/"); // Redirect to homepage or wherever appropriate
-      } else {
-        throw new Error(result.message || "Failed to save HR Manager data.");
-      }
-    } catch (error) {
-      console.error("Error creating user:", error.message);
-    } finally {
-      setIsLoading(false);
-    }
+  const onSubmit = (data) => {
+    sessionStorage.setItem("hrFormData", JSON.stringify(data));
+    navigate("/payment");
   };
-  
 
   return (
     <div className="max-w-lg mx-auto mt-10 p-5 border rounded-lg shadow-lg bg-white">
@@ -195,10 +121,10 @@ const HrForm = () => {
               {errors.password.type === "required"
                 ? "Password is required"
                 : errors.password.type === "minLength"
-                ? "Password must be at least 6 characters"
-                : errors.password.type === "pattern"
-                ? "Password must include uppercase, lowercase, number, and special character"
-                : ""}
+                  ? "Password must be at least 6 characters"
+                  : errors.password.type === "pattern"
+                    ? "Password must include uppercase, lowercase, number, and special character"
+                    : ""}
             </p>
           )}
         </div>
@@ -226,30 +152,21 @@ const HrForm = () => {
             {...register("package", { required: "Package selection is required" })}
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
-            <option value="" disabled>
-              Select a package
-            </option>
+            <option value="" disabled>Select a package</option>
             <option value="basic">5 Members for $5</option>
             <option value="standard">10 Members for $8</option>
             <option value="premium">20 Members for $15</option>
           </select>
           {errors.package && <p className="text-red-500 text-sm">{errors.package.message}</p>}
         </div>
-        {/* Submit */}
-        <NavLink to="/payment">
-          <button className="mb-5 btn btn-primary">Payment</button>
-        </NavLink>
+
+        {/* Submit Button */}
         <button
-            type="submit"
-            disabled={!isPaymentDone || isLoading}
-            className={`w-full py-2 px-4 rounded ${
-              isPaymentDone
-                ? "bg-blue-500 hover:bg-blue-700 text-white"
-                : "bg-gray-400 text-gray-700 cursor-not-allowed"
-            }`}
-          >
-            Submit
-          </button>
+          type="submit"
+          className="w-full py-2 px-4 rounded bg-blue-500 hover:bg-blue-700 text-white"
+        >
+          Proceed to Payment
+        </button>
       </form>
     </div>
   );

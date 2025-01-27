@@ -12,6 +12,7 @@ import AddAssets from "../pages/Hr/AddAssets/AddAssets";
 import PrivateRoute from "./PrivateRoute";
 import Profile from "../pages/Profile/Profile";
 import Payment from "../pages/Payment/Payment";
+import AddEmployee from "../pages/Hr/AddEmployee/AddEmployee";
 
   
   export const router = createBrowserRouter([
@@ -44,6 +45,10 @@ import Payment from "../pages/Payment/Payment";
           path: "hrForm",
           element:
             <HrForm></HrForm>
+        },
+        {
+          path: "addEmployee",
+          element:<AddEmployee></AddEmployee>
         },
         {
           path: "assets",
