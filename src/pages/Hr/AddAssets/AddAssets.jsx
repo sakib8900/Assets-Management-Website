@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AddAssets = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     type: "Non-returnable",
@@ -30,8 +33,9 @@ const AddAssets = () => {
 
       const data = await response.json();
       if (data.insertedId) {
-        alert("Asset added successfully!");
+        Swal.fire('Add Asset', 'Asset added successfully!', 'success');
         setFormData({ name: "", type: "Non-returnable", quantity: 0, addedDate: "" });
+        navigate("/assets");
       }
     } catch (error) {
       console.error("Error adding asset:", error);

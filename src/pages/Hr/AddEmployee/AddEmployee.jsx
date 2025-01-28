@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
 import Loading from "../../../Shared/Loading/Loading";
+import Swal from "sweetalert2";
 
 const AddEmployee = () => {
     const [employees, setEmployees] = useState([]);
@@ -56,11 +57,13 @@ const AddEmployee = () => {
             const employeeData = {
                 fullName: employee.fullName,
                 email: employee.email,
+                image: employee.image,
                 hrEmail: hrData.email,
                 company: {
                     name: hrData.company.name,
                     logo: hrData.company.logo
-                }
+                },
+                role: "employee",
             };
 
             const addEmployeeResponse = await fetch("http://localhost:5000/employee", {
@@ -99,11 +102,11 @@ const AddEmployee = () => {
 
             // Update local state to reflect changes
             setEmployees(employees.filter(emp => emp._id !== employee._id));
-            alert("Employee added successfully!");
+            Swal.fire('Success', 'Employee added successfully!', 'success');
 
         } catch (err) {
             console.error("Error in employee addition process:", err);
-            alert("Failed to complete employee addition process");
+            Swal.fire('Error', 'Failed to complete employee addition process', 'error');
         }
     };
 

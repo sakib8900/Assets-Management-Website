@@ -27,7 +27,7 @@ const Profile = () => {
                 setEditMode(false);
             } catch (error) {
                 console.error('Failed to update name:', error.message);
-                alert('Failed to update name. Please try again.');
+                Swal.fire('Error', 'Failed to update name. Please try again.', 'error');
             }
         }
     };

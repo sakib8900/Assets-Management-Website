@@ -13,6 +13,9 @@ import PrivateRoute from "./PrivateRoute";
 import Profile from "../pages/Profile/Profile";
 import Payment from "../pages/Payment/Payment";
 import AddEmployee from "../pages/Hr/AddEmployee/AddEmployee";
+import RequestAssets from "../pages/Employee/RequestAssets/RequestAssets";
+import ActionAssets from "../pages/Hr/ActionAssets/ActionAssets";
+import MyAssets from "../pages/Employee/MyAssets/MyAssets";
 
   
   export const router = createBrowserRouter([
@@ -58,11 +61,23 @@ import AddEmployee from "../pages/Hr/AddEmployee/AddEmployee";
           path: "addAssets",
           element: <AddAssets></AddAssets>
         },
+        {
+          path: "actionAssets",
+          element: <ActionAssets></ActionAssets>
+        },
         // employee
         {
           path: "employeeForm",
           element: <EmployeeForm></EmployeeForm>
-        }
+        },
+        {
+          path: "requestAssets",
+          element: <RequestAssets></RequestAssets>
+        },
+        {
+          path: "myAssets",
+          element: <MyAssets></MyAssets>
+        },
       ]
     },
   ]);
