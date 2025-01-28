@@ -3,6 +3,7 @@ import useAssets from '../../../hooks/useAssets';
 import { FaBox } from 'react-icons/fa';
 import { useContext } from 'react'; // Add this if you're using AuthContext
 import { AuthContext } from '../../../providers/AuthProvider'; // Update path as needed
+import Swal from 'sweetalert2';
 
 const RequestAssets = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -61,14 +62,14 @@ const RequestAssets = () => {
                 });
 
                 // Show success message (you can use a toast notification library here)
-                alert('Asset request submitted successfully!');
+                Swal.fire("Request Send", "Asset request submitted successfully!", "success");
                 closeModal();
             } else {
                 throw new Error('Failed to submit request');
             }
         } catch (error) {
-            console.error('Error submitting request:', error);
-            alert('Failed to submit request. Please try again.');
+            // console.error('Error submitting request:', error);
+            Swal.fire("Error", "Error submitting request", "error");
         }
     };
 

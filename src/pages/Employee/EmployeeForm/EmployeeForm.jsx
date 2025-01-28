@@ -53,7 +53,7 @@ const EmployeeForm = () => {
       const userCredential = await createUser(formData.email, formData.password);
       
       // Update user profile
-      await updateUserProfile(formData.fullName, photoURL);
+      await updateUserProfile(formData.displayName, photoURL);
 
       // Prepare payload for employee join request
       const payload = {
@@ -107,17 +107,17 @@ const EmployeeForm = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Full Name */}
         <div className="mb-4">
-          <label htmlFor="fullName" className="block text-gray-700 font-medium mb-2">
+          <label htmlFor="displayName" className="block text-gray-700 font-medium mb-2">
             Full Name
           </label>
           <input
             type="text"
-            id="fullName"
-            {...register("fullName", { required: "Full Name is required" })}
+            id="displayName"
+            {...register("displayName", { required: "Full Name is required" })}
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="Enter your full name"
           />
-          {errors.fullName && <p className="text-red-500 text-sm">{errors.displayName.message}</p>}
+          {errors.displayName && <p className="text-red-500 text-sm">{errors.displayName.message}</p>}
         </div>
 
         {/* Email */}

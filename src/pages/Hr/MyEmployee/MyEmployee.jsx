@@ -46,6 +46,7 @@ const MyEmployee = () => {
             {employees.map((employee,idx) => (
               <tr key={employee._id} className="border-b hover:bg-gray-50">
                 <td>{idx+1}</td>
+                <td className="p-3">{employee.name}</td>
                 <td className="p-3">{employee.email}</td>
                 <td className="p-3">{employee.role}</td>
                 <td className="p-3">

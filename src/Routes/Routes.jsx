@@ -86,8 +86,6 @@ export const router = createBrowserRouter([
           <AddEmployee></AddEmployee>
         </PrivateRoute>
       },
-
-
       // employee
       {
         path: "employeeForm",

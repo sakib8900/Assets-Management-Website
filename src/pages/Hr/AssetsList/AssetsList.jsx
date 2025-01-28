@@ -1,10 +1,12 @@
-// AssetsList.jsx - Updated Component
+// AssetsList.jsx - Updated Component (with Axios)
 import React, { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { Helmet } from "react-helmet";
 import useAssets from "../../../hooks/useAssets";
 import Loading from "../../../Shared/Loading/Loading";
 import Swal from "sweetalert2";
+import axios from "axios";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AssetsList = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -12,7 +14,8 @@ const AssetsList = () => {
     const [typeFilter, setTypeFilter] = useState("");
     const [sortOption, setSortOption] = useState("");
     const [editData, setEditData] = useState(null);
-    
+    const axiosSecure = useAxiosSecure();
+
     const [assets, loading, setAssets] = useAssets(
         searchTerm,
         stockFilter,
@@ -27,62 +30,58 @@ const AssetsList = () => {
 
     const handleUpdate = async (e) => {
         e.preventDefault();
-        
+
         try {
-            const response = await fetch(`http://localhost:5000/assets/${editData._id}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
+            const response = await axiosSecure.put(
+                `http://localhost:5000/assets/${editData._id}`,
+                {
                     name: editData.name,
                     type: editData.type,
-                    quantity: parseInt(editData.quantity)
-                }),
-            });
+                    quantity: parseInt(editData.quantity),
+                }
+            );
 
-            const result = await response.json();
-
-            if (result.modifiedCount > 0) {
+            if (response.data.modifiedCount > 0) {
                 // Update local state
-                setAssets(assets.map(asset => 
+                setAssets(assets.map((asset) =>
                     asset._id === editData._id ? { ...asset, ...editData } : asset
                 ));
-                
-                Swal.fire('Success', 'Asset updated successfully!', 'success');
+
+                Swal.fire("Success", "Asset updated successfully!", "success");
                 document.getElementById("edit-modal").checked = false;
                 setEditData(null);
             }
         } catch (error) {
             console.error("Error updating asset:", error);
-            Swal.fire('Error', 'Failed to update asset', 'error');
+            Swal.fire("Error", "Failed to update asset", "error");
         }
     };
 
     const handleDelete = async (id) => {
         const result = await Swal.fire({
-            title: 'Are you sure?',
+            title: "Are you sure?",
             text: "You won't be able to revert this!",
-            icon: 'warning',
+            icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
         });
 
         if (result.isConfirmed) {
             try {
-                const response = await fetch(`http://localhost:5000/assets/${id}`, {
-                    method: 'DELETE'
-                });
-                const data = await response.json();
+                const response = await axiosSecure.delete(
+                    `http://localhost:5000/assets/${id}`
+                );
 
-                if (data.message === "Asset deleted successfully") {
+                if (response.data.message === "Asset deleted successfully") {
                     // Update local state
-                    setAssets(assets.filter(asset => asset._id !== id));
-                    Swal.fire('Deleted!', 'Asset has been deleted.', 'success');
+                    setAssets(assets.filter((asset) => asset._id !== id));
+                    Swal.fire("Deleted!", "Asset has been deleted.", "success");
                 }
             } catch (error) {
                 console.error("Error deleting asset:", error);
-                Swal.fire('Error', 'Failed to delete asset', 'error');
+                Swal.fire("Error", "Failed to delete asset", "error");
             }
         }
     };
@@ -96,7 +95,7 @@ const AssetsList = () => {
             <Helmet>
                 <title>Asset Management || AssetsList</title>
             </Helmet>
-            
+
             <div>
                 <h2 className="text-3xl font-bold text-center my-4">Our Available Assets</h2>
             </div>

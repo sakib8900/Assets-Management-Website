@@ -2,15 +2,17 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { FiCornerUpLeft } from "react-icons/fi";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const MyAssets = () => {
   const [assets, setAssets] = useState([]);
   const [disabledButtons, setDisabledButtons] = useState([]);
   const { user } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     if (user && user.email) {
-      axios
+      axiosSecure
         .get("http://localhost:5000/myAssets")
         .then((response) => {
           const userAssets = response.data.filter(
