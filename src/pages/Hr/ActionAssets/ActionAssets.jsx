@@ -6,14 +6,13 @@ const ActionAssets = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(true);
 
-    // Fetch asset requests
     useEffect(() => {
         fetchRequests();
     }, []);
 
     const fetchRequests = async () => {
         try {
-            const response = await fetch('http://localhost:5000/myAssets');
+            const response = await fetch('https://asset-management-system-server-one.vercel.app/myAssets');
             const data = await response.json();
             setRequests(data);
             setLoading(false);
@@ -23,10 +22,9 @@ const ActionAssets = () => {
         }
     };
 
-    // Handle request approval
     const handleApprove = async (requestId) => {
         try {
-            const response = await fetch(`http://localhost:5000/myAssets/${requestId}`, {
+            const response = await fetch(`https://asset-management-system-server-one.vercel.app/myAssets/${requestId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -35,17 +33,16 @@ const ActionAssets = () => {
             });
 
             if (response.ok) {
-                fetchRequests(); // Refresh the list
+                fetchRequests();
             }
         } catch (error) {
             console.error('Error approving request:', error);
         }
     };
 
-    // Handle request rejection
     const handleReject = async (requestId) => {
         try {
-            const response = await fetch(`http://localhost:5000/myAssets/${requestId}`, {
+            const response = await fetch(`https://asset-management-system-server-one.vercel.app/myAssets/${requestId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -54,14 +51,13 @@ const ActionAssets = () => {
             });
 
             if (response.ok) {
-                fetchRequests(); // Refresh the list
+                fetchRequests();
             }
         } catch (error) {
             console.error('Error rejecting request:', error);
         }
     };
 
-    // Filter requests based on search term
     const filteredRequests = requests.filter((request) =>
         request.requesterName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         request.requesterEmail?.toLowerCase().includes(searchTerm.toLowerCase())

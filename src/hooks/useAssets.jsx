@@ -15,7 +15,7 @@ const useAssets = (searchTerm = "", stockFilter = "", typeFilter = "", sortOptio
                     ...(sortOption && { sort: sortOption })
                 });
 
-                const response = await fetch(`http://localhost:5000/assets?${queryParams}`);
+                const response = await fetch(`https://asset-management-system-server-one.vercel.app/assets?${queryParams}`);
                 const data = await response.json();
                 setAssets(data);
                 setLoading(false);

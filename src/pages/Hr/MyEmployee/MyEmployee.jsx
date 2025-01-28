@@ -6,7 +6,7 @@ const MyEmployee = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/employee")
+      .get("https://asset-management-system-server-one.vercel.app/employee")
       .then((response) => {
         setEmployees(response.data);
       })
@@ -17,7 +17,7 @@ const MyEmployee = () => {
 
   const handleRemove = (id) => {
     axios
-      .delete(`http://localhost:5000/employee/${id}`)
+      .delete(`https://asset-management-system-server-one.vercel.app/employee/${id}`)
       .then(() => {
         setEmployees(employees.filter((employee) => employee._id !== id));
       })

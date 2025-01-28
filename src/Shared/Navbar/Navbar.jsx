@@ -13,8 +13,8 @@ const Navbar = () => {
         const fetchUserRole = async () => {
             if (user?.email) {
                 try {
-                    // Check employee collection first
-                    const employeeResponse = await fetch(`http://localhost:5000/employee`);
+                    // Check employee collection
+                    const employeeResponse = await fetch(`https://asset-management-system-server-one.vercel.app/employee`);
                     const employeeData = await employeeResponse.json();
                     const employeeUser = employeeData.find(emp => emp.email.toLowerCase() === user.email.toLowerCase());
 
@@ -25,7 +25,7 @@ const Navbar = () => {
                     }
 
                     // If not employee, check HR collection
-                    const hrResponse = await fetch(`http://localhost:5000/hrManager`);
+                    const hrResponse = await fetch(`https://asset-management-system-server-one.vercel.app/hrManager`);
                     const hrData = await hrResponse.json();
                     const hrUser = hrData.find(hr => hr.email.toLowerCase() === user.email.toLowerCase());
 
@@ -62,8 +62,6 @@ const Navbar = () => {
         const commonLinks = [
             <NavLink key="home" to="/">Home</NavLink>
         ];
-
-        // If not logged in, show join options
         if (!user) {
             return [
                 ...commonLinks,
@@ -95,9 +93,6 @@ const Navbar = () => {
 
         return commonLinks;
     };
-
-    console.log('Current user role:', userRole); // Debug log
-    console.log('Current user data:', userData); // Debug log
 
     return (
         <div className="navbar bg-blue-300">

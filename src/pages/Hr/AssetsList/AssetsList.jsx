@@ -32,7 +32,7 @@ const AssetsList = () => {
 
         try {
             const response = await axiosSecure.put(
-                `http://localhost:5000/assets/${editData._id}`,
+                `https://asset-management-system-server-one.vercel.app/assets/${editData._id}`,
                 {
                     name: editData.name,
                     type: editData.type,
@@ -70,11 +70,10 @@ const AssetsList = () => {
         if (result.isConfirmed) {
             try {
                 const response = await axiosSecure.delete(
-                    `http://localhost:5000/assets/${id}`
+                    `https://asset-management-system-server-one.vercel.app/assets/${id}`
                 );
 
                 if (response.data.message === "Asset deleted successfully") {
-                    // Update local state
                     setAssets(assets.filter((asset) => asset._id !== id));
                     Swal.fire("Deleted!", "Asset has been deleted.", "success");
                 }
@@ -184,7 +183,7 @@ const AssetsList = () => {
                 </table>
             </div>
 
-            {/* Edit Modal */}
+            {/* Modal */}
             {editData && (
                 <>
                     <input type="checkbox" id="edit-modal" className="modal-toggle" />

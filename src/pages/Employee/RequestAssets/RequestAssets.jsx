@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import useAssets from '../../../hooks/useAssets';
 import { FaBox } from 'react-icons/fa';
-import { useContext } from 'react'; // Add this if you're using AuthContext
-import { AuthContext } from '../../../providers/AuthProvider'; // Update path as needed
+import { useContext } from 'react';
+import { AuthContext } from '../../../providers/AuthProvider';
 import Swal from 'sweetalert2';
 
 const RequestAssets = () => {
@@ -13,7 +13,7 @@ const RequestAssets = () => {
     const [selectedAsset, setSelectedAsset] = useState(null);
     const [requestNote, setRequestNote] = useState("");
     const [assets, loading] = useAssets(searchTerm, stockFilter, typeFilter);
-    const { user } = useContext(AuthContext); // Assuming you have AuthContext for user info
+    const { user } = useContext(AuthContext);
 
     // Handle modal open
     const openModal = (asset) => {
@@ -41,7 +41,7 @@ const RequestAssets = () => {
                 status: 'pending'
             };
 
-            const response = await fetch('http://localhost:5000/myAssets', {
+            const response = await fetch('https://asset-management-system-server-one.vercel.app/myAssets', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -50,8 +50,7 @@ const RequestAssets = () => {
             });
 
             if (response.ok) {
-                // Update the asset quantity in the assets collection
-                await fetch(`http://localhost:5000/assets/${selectedAsset._id}`, {
+                await fetch(`https://asset-management-system-server-one.vercel.app/assets/${selectedAsset._id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -60,20 +59,15 @@ const RequestAssets = () => {
                         quantity: selectedAsset.quantity - 1
                     }),
                 });
-
-                // Show success message (you can use a toast notification library here)
                 Swal.fire("Request Send", "Asset request submitted successfully!", "success");
                 closeModal();
             } else {
                 throw new Error('Failed to submit request');
             }
         } catch (error) {
-            // console.error('Error submitting request:', error);
             Swal.fire("Error", "Error submitting request", "error");
         }
     };
-
-    // Rest of the component remains the same...
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-3xl font-bold text-center my-6">Request Assets</h1>
@@ -107,7 +101,7 @@ const RequestAssets = () => {
                 </select>
             </div>
 
-            {/* Loading or Asset Table */}
+            {/* Asset Table */}
             {loading ? (
                 <div className="flex justify-center items-center">
                     <button className="btn btn-primary loading">Loading...</button>

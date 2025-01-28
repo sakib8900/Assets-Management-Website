@@ -19,8 +19,6 @@ const CheckoutForm = () => {
     if (!stripe || !elements) {
       return;
     }
-
-    // Get form data from sessionStorage
     const formData = JSON.parse(sessionStorage.getItem("hrFormData"));
     if (!formData) {
       Swal.fire({
@@ -32,19 +30,15 @@ const CheckoutForm = () => {
     }
 
     try {
-      // Process payment first
       const cardElement = elements.getElement(CardElement);
       const { token, error } = await stripe.createToken(cardElement);
 
       if (error) {
         throw new Error(error.message);
       }
-
-      // Create user authentication
       await createUser(formData.email, formData.password);
       await updateUserProfile(formData.fullName, formData.photoURL);
 
-      // Prepare package details
       const packageDetails = {
         type:
           formData.package === "basic"
@@ -67,7 +61,6 @@ const CheckoutForm = () => {
         currentEmployees: 0,
       };
 
-      // Prepare payload for MongoDB
       const payload = {
         fullName: formData.fullName,
         email: formData.email,
@@ -83,7 +76,6 @@ const CheckoutForm = () => {
         paymentId: token.id,
       };
 
-      // Save data to MongoDB using axios
       const response = await axiosPublic.post("/hrManager", payload, {
         headers: {
           "Content-Type": "application/json",
@@ -93,11 +85,8 @@ const CheckoutForm = () => {
       if (response.status !== 200) {
         throw new Error("Failed to save user data");
       }
-
-      // Clear stored form data
       sessionStorage.removeItem("hrFormData");
 
-      // Show success message
       await Swal.fire({
         icon: "success",
         title: "Success!",
@@ -105,8 +94,6 @@ const CheckoutForm = () => {
         timer: 2000,
         showConfirmButton: false,
       });
-
-      // Redirect to home page
       navigate("/");
     } catch (err) {
       console.error("Error:", err);

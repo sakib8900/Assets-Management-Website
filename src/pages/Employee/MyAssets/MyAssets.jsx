@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { FiCornerUpLeft } from "react-icons/fi";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -13,7 +12,7 @@ const MyAssets = () => {
   useEffect(() => {
     if (user && user.email) {
       axiosSecure
-        .get("http://localhost:5000/myAssets")
+        .get("https://asset-management-system-server-one.vercel.app/myAssets")
         .then((response) => {
           const userAssets = response.data.filter(
             (asset) => asset.requesterEmail === user.email

@@ -4,25 +4,24 @@ import { FaX } from "react-icons/fa6";
 import Loading from "../../../Shared/Loading/Loading";
 import Swal from "sweetalert2";
 import { useContext } from 'react';
-import { AuthContext } from '../../../providers/AuthProvider'; // Update path as needed
+import { AuthContext } from '../../../providers/AuthProvider';
 
 const AddEmployee = () => {
     const [employees, setEmployees] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [hrData, setHrData] = useState(null);
-    const { user } = useContext(AuthContext); // Get current user's email
+    const { user } = useContext(AuthContext); 
 
     // Fetch HR data
     useEffect(() => {
         const fetchHrData = async () => {
             try {
-                const response = await fetch("http://localhost:5000/hrManager");
+                const response = await fetch("https://asset-management-system-server-one.vercel.app/hrManager");
                 if (!response.ok) {
                     throw new Error("Failed to fetch HR data");
                 }
                 const data = await response.json();
-                // Find the HR data that matches the logged-in user's email
                 const currentHrData = data.find(hr => hr.email === user.email);
                 setHrData(currentHrData);
             } catch (err) {
@@ -37,7 +36,7 @@ const AddEmployee = () => {
     useEffect(() => {
         const fetchEmployees = async () => {
             try {
-                const response = await fetch("http://localhost:5000/employeeJoinReq");
+                const response = await fetch("https://asset-management-system-server-one.vercel.app/employeeJoinReq");
                 if (!response.ok) {
                     throw new Error("Failed to fetch employee data");
                 }
@@ -57,20 +56,18 @@ const AddEmployee = () => {
             Swal.fire('Error', 'HR data not available', 'error');
             return;
         }
-
-        // Check if team limit is reached
         if (hrData.package.currentEmployees >= hrData.package.limit) {
             Swal.fire('Error', 'Team member limit reached for your package', 'error');
             return;
         }
 
         try {
-            // Step 1: Add employee to the employee collection
+            
             const employeeData = {
                 displayName: employee.displayName,
                 email: employee.email,
                 photoURL: employee.photoURL,
-                hrEmail: user.email, // Use logged-in HR's email
+                hrEmail: user.email,
                 company: {
                     name: hrData.company.name,
                     logo: hrData.company.logo
@@ -78,7 +75,7 @@ const AddEmployee = () => {
                 role: "employee",
             };
 
-            const addEmployeeResponse = await fetch("http://localhost:5000/employee", {
+            const addEmployeeResponse = await fetch("https://asset-management-system-server-one.vercel.app/employee", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(employeeData),
@@ -88,9 +85,8 @@ const AddEmployee = () => {
                 throw new Error("Failed to add employee");
             }
 
-            // Step 2: Update HR's team array
             const updateHrTeamResponse = await fetch(
-                `http://localhost:5000/hrManager/addTeamMember/${user.email}`,
+                `https://asset-management-system-server-one.vercel.app/hrManager/addTeamMember/${user.email}`,
                 {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
@@ -102,9 +98,8 @@ const AddEmployee = () => {
                 throw new Error("Failed to update HR team");
             }
 
-            // Step 3: Remove the join request
             const removeResponse = await fetch(
-                `http://localhost:5000/employeeJoinReq/${employee._id}`,
+                `https://asset-management-system-server-one.vercel.app/employeeJoinReq/${employee._id}`,
                 { method: "DELETE" }
             );
 
@@ -112,10 +107,8 @@ const AddEmployee = () => {
                 throw new Error("Failed to remove join request");
             }
 
-            // Update local state to reflect changes
             setEmployees(employees.filter(emp => emp._id !== employee._id));
             
-            // Update local HR data
             setHrData(prev => ({
                 ...prev,
                 team: [...(prev.team || []), employee.email],
@@ -136,7 +129,7 @@ const AddEmployee = () => {
     const handleReject = async (employeeId) => {
         try {
             const response = await fetch(
-                `http://localhost:5000/employeeJoinReq/${employeeId}`,
+                `https://asset-management-system-server-one.vercel.app/employeeJoinReq/${employeeId}`,
                 { method: "DELETE" }
             );
 

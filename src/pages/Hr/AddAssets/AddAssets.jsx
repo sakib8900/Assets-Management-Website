@@ -14,14 +14,12 @@ const AddAssets = () => {
     addedDate: "",
   });
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     const updatedValue = name === "quantity" ? Number(value) : value;
     setFormData({ ...formData, [name]: updatedValue });
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 

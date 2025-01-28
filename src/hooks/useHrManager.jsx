@@ -7,7 +7,7 @@ const useHrManager = (role) => {
 
     useEffect(() => {
         if (role === 'hr') {
-            fetch('http://localhost:5000/hrManager')
+            fetch('https://asset-management-system-server-one.vercel.app/hrManager')
                 .then(response => response.json())
                 .then(data => {
                     setHrManager(data);

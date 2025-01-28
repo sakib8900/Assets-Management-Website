@@ -9,7 +9,7 @@ const useHr = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/hrManager');
+                const response = await axios.get('https://asset-management-system-server-one.vercel.app/hrManager');
                 setHrData(response.data);
                 setLoading(false);
             } catch (err) {
