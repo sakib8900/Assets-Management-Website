@@ -3,11 +3,14 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const HrForm = () => {
+  const axiosPublic = useAxiosPublic()
   const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm();
   const navigate = useNavigate();
   const photoURLFile = watch("photoURL");
@@ -17,13 +20,9 @@ const HrForm = () => {
     formData.append("image", file);
 
     try {
-      const res = await fetch(image_hosting_api, {
-        method: "POST",
-        body: formData,
-      });
-      const data = await res.json();
-      if (data.success) {
-        setValue(fieldName, data.data.url);
+      const res = await axiosPublic.post(image_hosting_api, formData);
+      if (res.data.success) {
+        setValue(fieldName, res.data.data.url);
       }
     } catch (error) {
       console.error("Image upload failed:", error.message);

@@ -51,7 +51,7 @@ const MyAssets = () => {
         {/* Table Body */}
         <tbody>
           {assets.length > 0 ? (
-            assets.map((asset,idx) => (
+            assets.map((asset, idx) => (
               <tr key={asset._id} className="border-b">
                 <td>{idx + 1}</td>
                 <td className="p-3">{asset.assetName}</td>
@@ -61,29 +61,29 @@ const MyAssets = () => {
                 </td>
                 <td className="p-3">
                   <span
-                    className={`badge ${
-                      asset.status === "approved"
+                    className={`badge ${asset.status === "approved"
                         ? "badge-success"
                         : asset.status === "rejected"
-                        ? "badge-error"
-                        : "badge-warning"
-                    }`}
+                          ? "badge-error"
+                          : "badge-warning"
+                      }`}
                   >
                     {asset.status}
                   </span>
                 </td>
                 <td className="p-3">
-                  <button
-                    onClick={() => handleReturn(asset._id)}
-                    disabled={disabledButtons.includes(asset._id)}
-                    className={`py-2 px-4 rounded ${
-                      disabledButtons.includes(asset._id)
-                        ? "bg-gray-400 text-gray-700 cursor-not-allowed"
-                        : "bg-blue-500 hover:bg-blue-700 text-white"
-                    }`}
-                  >
-                    <FiCornerUpLeft></FiCornerUpLeft>
-                  </button>
+                  {asset.status === "approved" && (
+                    <button
+                      onClick={() => handleReturn(asset._id)}
+                      disabled={disabledButtons.includes(asset._id)}
+                      className={`py-2 px-4 rounded ${disabledButtons.includes(asset._id)
+                          ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+                          : "bg-blue-500 hover:bg-blue-700 text-white"
+                        }`}
+                    >
+                      <FiCornerUpLeft></FiCornerUpLeft>
+                    </button>
+                  )}
                 </td>
               </tr>
             ))

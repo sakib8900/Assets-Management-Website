@@ -5,7 +5,6 @@ import { Helmet } from "react-helmet";
 import useAssets from "../../../hooks/useAssets";
 import Loading from "../../../Shared/Loading/Loading";
 import Swal from "sweetalert2";
-import axios from "axios";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AssetsList = () => {

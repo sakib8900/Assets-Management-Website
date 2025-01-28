@@ -2,10 +2,12 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { AuthContext} from "../../providers/AuthProvider"
+import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const CheckoutForm = () => {
+  const axiosPublic = useAxiosPublic()
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
@@ -22,9 +24,9 @@ const CheckoutForm = () => {
     const formData = JSON.parse(sessionStorage.getItem("hrFormData"));
     if (!formData) {
       Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Form data not found. Please fill the form first.'
+        icon: "error",
+        title: "Error",
+        text: "Form data not found. Please fill the form first.",
       });
       return;
     }
@@ -33,7 +35,7 @@ const CheckoutForm = () => {
       // Process payment first
       const cardElement = elements.getElement(CardElement);
       const { token, error } = await stripe.createToken(cardElement);
-      
+
       if (error) {
         throw new Error(error.message);
       }
@@ -44,9 +46,24 @@ const CheckoutForm = () => {
 
       // Prepare package details
       const packageDetails = {
-        type: formData.package === "basic" ? "5 Members" : formData.package === "standard" ? "10 Members" : "20 Members",
-        price: formData.package === "basic" ? 5 : formData.package === "standard" ? 8 : 15,
-        limit: formData.package === "basic" ? 5 : formData.package === "standard" ? 10 : 20,
+        type:
+          formData.package === "basic"
+            ? "5 Members"
+            : formData.package === "standard"
+            ? "10 Members"
+            : "20 Members",
+        price:
+          formData.package === "basic"
+            ? 5
+            : formData.package === "standard"
+            ? 8
+            : 15,
+        limit:
+          formData.package === "basic"
+            ? 5
+            : formData.package === "standard"
+            ? 10
+            : 20,
         currentEmployees: 0,
       };
 
@@ -63,19 +80,17 @@ const CheckoutForm = () => {
         role: "hr",
         profilePicture: formData.photoURL,
         team: [],
-        paymentId: token.id
+        paymentId: token.id,
       };
 
-      // Save data to MongoDB
-      const response = await fetch("http://localhost:5000/hrManager", {
-        method: "POST",
+      // Save data to MongoDB using axios
+      const response = await axiosPublic.post("/hrManager", payload, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload),
       });
 
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new Error("Failed to save user data");
       }
 
@@ -84,22 +99,21 @@ const CheckoutForm = () => {
 
       // Show success message
       await Swal.fire({
-        icon: 'success',
-        title: 'Success!',
-        text: 'Payment successful and account created!',
+        icon: "success",
+        title: "Success!",
+        text: "Payment successful and account created!",
         timer: 2000,
-        showConfirmButton: false
+        showConfirmButton: false,
       });
 
       // Redirect to home page
       navigate("/");
-
     } catch (err) {
       console.error("Error:", err);
       Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: err.message || 'Something went wrong'
+        icon: "error",
+        title: "Error",
+        text: err.message || "Something went wrong",
       });
     }
   };
@@ -107,18 +121,18 @@ const CheckoutForm = () => {
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6">
       <div className="p-4 border rounded-md bg-gray-50">
-        <CardElement 
+        <CardElement
           options={{
             style: {
               base: {
-                fontSize: '16px',
-                color: '#424770',
-                '::placeholder': {
-                  color: '#aab7c4',
+                fontSize: "16px",
+                color: "#424770",
+                "::placeholder": {
+                  color: "#aab7c4",
                 },
               },
               invalid: {
-                color: '#9e2146',
+                color: "#9e2146",
               },
             },
           }}
