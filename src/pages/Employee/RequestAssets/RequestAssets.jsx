@@ -41,7 +41,8 @@ const RequestAssets = () => {
                 note: requestNote,
                 status: 'pending'
             };
-
+    
+            // Send the request data to the server
             const response = await fetch('https://asset-management-system-server-one.vercel.app/myAssets', {
                 method: 'POST',
                 headers: {
@@ -49,19 +50,25 @@ const RequestAssets = () => {
                 },
                 body: JSON.stringify(requestData),
             });
-
+    
             if (response.ok) {
-                await fetch(`https://asset-management-system-server-one.vercel.app/assets/${selectedAsset._id}`, {
+                // Update the asset's isRequest field on the server
+                const updateResponse = await fetch(`https://asset-management-system-server-one.vercel.app/assets/${selectedAsset._id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        quantity: selectedAsset.quantity - 1
+                        isRequest: true
                     }),
                 });
-                Swal.fire("Request Send", "Asset request submitted successfully!", "success");
-                closeModal();
+    
+                if (updateResponse.ok) {
+                    Swal.fire("Request Sent", "Asset request submitted successfully!", "success");
+                    closeModal();
+                } else {
+                    throw new Error('Failed to update asset request status');
+                }
             } else {
                 throw new Error('Failed to submit request');
             }
@@ -110,17 +117,16 @@ const RequestAssets = () => {
             ) : (
                 <div className="overflow-x-auto">
                     <table className="table w-full">
-                        {/* Table Header */}
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Asset Name</th>
                                 <th>Asset Type</th>
                                 <th>Status</th>
+                                <th>Requests</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        {/* Table Body */}
                         <tbody>
                             {assets.map((asset, idx) => (
                                 <tr key={asset._id}>
@@ -128,13 +134,11 @@ const RequestAssets = () => {
                                     <td>{asset.name}</td>
                                     <td>{asset.type}</td>
                                     <td>
-                                        <span
-                                            className={`badge ${asset.quantity > 0 ? 'badge-success' : 'badge-error'
-                                                }`}
-                                        >
+                                        <span className={`badge ${asset.quantity > 0 ? 'badge-success' : 'badge-error'}`}>
                                             {asset.quantity > 0 ? 'Available' : 'Unavailable'}
                                         </span>
                                     </td>
+                                    <td>{asset.reqCount || 0}</td>
                                     <td>
                                         <button
                                             className="btn btn-sm btn-primary flex items-center gap-2"

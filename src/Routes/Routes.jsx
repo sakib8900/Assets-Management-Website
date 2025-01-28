@@ -7,7 +7,6 @@ import AssetsList from "../pages/Hr/AssetsList/AssetsList";
 import HrForm from "../pages/Hr/HrForm/HrForm";
 import EmployeeForm from "../pages/Employee/EmployeeForm/EmployeeForm";
 import Login from "../pages/Login/Login";
-import Signup from "../pages/Signup/Signup";
 import AddAssets from "../pages/Hr/AddAssets/AddAssets";
 import PrivateRoute from "./PrivateRoute";
 import Profile from "../pages/Profile/Profile";
@@ -31,10 +30,6 @@ export const router = createBrowserRouter([
       {
         path: "login",
         element: <Login></Login>
-      },
-      {
-        path: "signUp",
-        element: <Signup></Signup>
       },
       {
         path: "profile",
