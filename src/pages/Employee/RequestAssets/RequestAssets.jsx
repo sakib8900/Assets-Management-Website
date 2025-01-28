@@ -4,6 +4,7 @@ import { FaBox } from 'react-icons/fa';
 import { useContext } from 'react';
 import { AuthContext } from '../../../providers/AuthProvider';
 import Swal from 'sweetalert2';
+import SharedTitle from '../../../Shared/SharedTitle/SharedTitle';
 
 const RequestAssets = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -70,7 +71,7 @@ const RequestAssets = () => {
     };
     return (
         <div className="container mx-auto p-4">
-            <h1 className="text-3xl font-bold text-center my-6">Request Assets</h1>
+            <SharedTitle heading="Request Assets"></SharedTitle>
 
             {/* Filters */}
             <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-6">
