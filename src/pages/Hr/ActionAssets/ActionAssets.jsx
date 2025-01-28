@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import SharedTitle from '../../../Shared/SharedTitle/SharedTitle';
 
 const ActionAssets = () => {
     const [requests, setRequests] = useState([]);
@@ -69,11 +70,9 @@ const ActionAssets = () => {
     return (
         <div className="container mx-auto p-4">
             {/* Card Header */}
-            <div className="card bg-base-100 shadow-xl mb-6">
-                <div className="card-body">
-                    <h2 className="card-title text-3xl font-bold text-center">Asset Requests</h2>
-                </div>
-            </div>
+            <SharedTitle heading={'Manage asset requests'} subHeading={'Approve Employee Request'}>Asset Requests
+
+            </SharedTitle>
 
             {/* Search Section */}
             <div className="form-control mb-6">

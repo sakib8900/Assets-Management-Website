@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+
 
 const AddAssets = () => {
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
   const [formData, setFormData] = useState({
     name: "",
     type: "Non-returnable",
@@ -11,34 +14,28 @@ const AddAssets = () => {
     addedDate: "",
   });
 
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     const updatedValue = name === "quantity" ? Number(value) : value;
-  
     setFormData({ ...formData, [name]: updatedValue });
   };
-  
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/assets", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await axiosSecure.post("/assets", formData);
 
-      const data = await response.json();
-      if (data.insertedId) {
-        Swal.fire('Add Asset', 'Asset added successfully!', 'success');
+      if (response.data.insertedId) {
+        Swal.fire("Add Asset", "Asset added successfully!", "success");
         setFormData({ name: "", type: "Non-returnable", quantity: 0, addedDate: "" });
         navigate("/assets");
       }
     } catch (error) {
       console.error("Error adding asset:", error);
+      Swal.fire("Error", "Failed to add the asset. Please try again.", "error");
     }
   };
 
@@ -88,6 +85,20 @@ const AddAssets = () => {
             value={formData.quantity}
             onChange={handleChange}
             placeholder="Enter quantity"
+            className="input input-bordered w-full"
+          />
+        </div>
+
+        {/* Added Date Input */}
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Added Date</span>
+          </label>
+          <input
+            type="date"
+            name="addedDate"
+            value={formData.addedDate}
+            onChange={handleChange}
             className="input input-bordered w-full"
           />
         </div>

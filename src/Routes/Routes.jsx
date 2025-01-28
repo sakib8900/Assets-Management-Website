@@ -1,6 +1,6 @@
 import {
-    createBrowserRouter,
-  } from "react-router-dom";
+  createBrowserRouter,
+} from "react-router-dom";
 import MainLayout from "../Layout/MainLayout";
 import Home from "../pages/Home/Home";
 import AssetsList from "../pages/Hr/AssetsList/AssetsList";
@@ -16,68 +16,97 @@ import AddEmployee from "../pages/Hr/AddEmployee/AddEmployee";
 import RequestAssets from "../pages/Employee/RequestAssets/RequestAssets";
 import ActionAssets from "../pages/Hr/ActionAssets/ActionAssets";
 import MyAssets from "../pages/Employee/MyAssets/MyAssets";
+import MyEmployee from "../pages/Hr/MyEmployee/MyEmployee";
 
-  
-  export const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <MainLayout></MainLayout>,
-      children: [
-        {
-            path: "/",
-            element: <Home></Home>
-        },
-        {
-          path: "login",
-          element: <Login></Login>
-        },
-        {
-          path: "signUp",
-          element: <Signup></Signup>
-        },
-        {
-          path: "profile",
-          element: <Profile></Profile>
-        },
-        {
-          path: "payment",
-          element: <Payment></Payment>
-        },
-        // hr
-        {
-          path: "hrForm",
-          element:
-            <HrForm></HrForm>
-        },
-        {
-          path: "addEmployee",
-          element:<AddEmployee></AddEmployee>
-        },
-        {
-          path: "assets",
-          element: <AssetsList></AssetsList>
-        },
-        {
-          path: "addAssets",
-          element: <AddAssets></AddAssets>
-        },
-        {
-          path: "actionAssets",
-          element: <ActionAssets></ActionAssets>
-        },
-        // employee
-        {
-          path: "employeeForm",
-          element: <EmployeeForm></EmployeeForm>
-        },
-        {
-          path: "requestAssets",
-          element: <RequestAssets></RequestAssets>
-        },
-        {
-          path: "myAssets",
-          element: <MyAssets></MyAssets>
-        },
-      ]
-    },
-  ]);
+
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainLayout></MainLayout>,
+    children: [
+      {
+        path: "/",
+        element: <Home></Home>
+      },
+      {
+        path: "login",
+        element: <Login></Login>
+      },
+      {
+        path: "signUp",
+        element: <Signup></Signup>
+      },
+      {
+        path: "profile",
+        element: <PrivateRoute>
+          <Profile></Profile>
+        </PrivateRoute>
+      },
+      {
+        path: "payment",
+        element: <PrivateRoute>
+          <Payment></Payment>
+        </PrivateRoute>
+      },
+      // hr
+      {
+        path: "hrForm",
+        element:
+          <HrForm></HrForm>
+      },
+      {
+        path: "assets",
+        element: <PrivateRoute>
+          <AssetsList></AssetsList>
+        </PrivateRoute>
+      },
+      {
+        path: "addAssets",
+        element: <PrivateRoute>
+          <AddAssets></AddAssets>
+        </PrivateRoute>
+
+      },
+      {
+        path: "actionAssets",
+        element: <PrivateRoute>
+          <ActionAssets></ActionAssets>
+        </PrivateRoute>
+      },
+      {
+        path: "myEmployees",
+        element: 
+        <PrivateRoute>
+            <MyEmployee></MyEmployee>
+          </PrivateRoute>
+      },
+      {
+        path: "addEmployee",
+        element: <PrivateRoute>
+          <AddEmployee></AddEmployee>
+        </PrivateRoute>
+      },
+
+
+      // employee
+      {
+        path: "employeeForm",
+        element: <EmployeeForm></EmployeeForm>
+      },
+      {
+        path: "myAssets",
+        element: <PrivateRoute>
+          <MyAssets></MyAssets>
+        </PrivateRoute>
+      },
+      // todo my team
+      {
+        path: "requestAssets",
+        element: <PrivateRoute>
+          <RequestAssets></RequestAssets>
+        </PrivateRoute>
+      },
+
+    ]
+  },
+]);

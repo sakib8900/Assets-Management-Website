@@ -35,11 +35,11 @@ const Profile = () => {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
             <div className="bg-white shadow-lg rounded-lg p-6 max-w-sm w-full">
-                {/* <img
+                <img
                     src={user?.photoURL || 'https://via.placeholder.com/150'}
                     alt="User Profile"
                     className="w-32 h-32 rounded-full mx-auto mb-4"
-                /> */}
+                />
                 {editMode ? (
                     <div>
                         <input

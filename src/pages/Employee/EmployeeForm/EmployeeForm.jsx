@@ -57,9 +57,9 @@ const EmployeeForm = () => {
 
       // Prepare payload for employee join request
       const payload = {
-        fullName: formData.fullName,
+        displayName: formData.displayName,
         email: formData.email,
-        image: photoURL, // Changed from photoURL to image to match backend
+        photoURL: photoURL, // Changed from photoURL to image to match backend
         dob: formData.dob
       };
 
@@ -117,7 +117,7 @@ const EmployeeForm = () => {
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="Enter your full name"
           />
-          {errors.fullName && <p className="text-red-500 text-sm">{errors.fullName.message}</p>}
+          {errors.fullName && <p className="text-red-500 text-sm">{errors.displayName.message}</p>}
         </div>
 
         {/* Email */}
