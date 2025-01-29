@@ -68,7 +68,6 @@ const Home = () => {
             <Helmet>
                 <title>Asset Management || Home</title>
             </Helmet>
-
             {/* no user */}
             {!user && (
                 <>
@@ -77,7 +76,6 @@ const Home = () => {
                     <Packages />
                 </>
             )}
-
             {/* if user have no role */}
             {user && !role && (
                 <>

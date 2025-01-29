@@ -18,14 +18,14 @@ const LimitedStock = () => {
   }, []);
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 bg-yellow-200 mt-8">
       {/* Title */}
       <SharedTitle
         heading="Limited Stock"
         subHeading="Keep track of assets running low to ensure timely restocking and uninterrupted resource availability."
       />
 
-      {/* Grid Layout for Cards */}
+      {/* Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
         {limitedStock.length > 0 ? (
           limitedStock.map((item) => (

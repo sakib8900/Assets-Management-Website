@@ -19,7 +19,7 @@ const OurCom = () => {
   }, []);
 
   return (
-    <div className="w-full px-4 lg:px-8 py-6">
+    <div className="w-full px-4 lg:px-8 py-6 bg-yellow-200 mt-8">
       <SharedTitle heading="Company Information" subHeading="Meet Our HR Manager"></SharedTitle>
       <div className="flex flex-wrap justify-center gap-6">
         {hrManagers.map((hrManager) =>
@@ -31,7 +31,7 @@ const OurCom = () => {
               {/* Card Content */}
               <div className="flex flex-col md:flex-row items-center gap-6">
                 
-                {/* Left: Company Info */}
+                {/* Left*/}
                 <div className="flex flex-col items-center md:items-start w-full md:w-1/3">
                   <h3 className="text-lg font-semibold text-gray-800">🏢 Company Info</h3>
                   <img
@@ -45,7 +45,7 @@ const OurCom = () => {
                   </p>
                 </div>
 
-                {/* Right: HR Manager Info */}
+                {/* Right */}
                 <div className="w-full md:w-2/3">
                   <h3 className="text-lg font-semibold text-gray-800">👨‍💼 HR Manager Info</h3>
                   <div className="flex flex-col items-center md:items-start">

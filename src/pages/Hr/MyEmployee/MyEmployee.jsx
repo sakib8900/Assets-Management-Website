@@ -3,15 +3,18 @@ import axios from "axios";
 import { Helmet } from "react-helmet";
 import SharedTitle from "../../../Shared/SharedTitle/SharedTitle";
 import Swal from "sweetalert2";
+import Loading from "../../../Shared/Loading/Loading";
 
 const MyEmployee = () => {
   const [employees, setEmployees] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
       .get("https://asset-management-system-server-one.vercel.app/employee")
       .then((response) => {
         setEmployees(response.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("There was an error fetching the employees!", error);
@@ -42,9 +45,9 @@ const MyEmployee = () => {
       }
     });
   };
-
-
-
+  if(loading){
+    return <Loading></Loading>
+  }
   return (
     <div className="container mx-auto p-6">
       <Helmet>

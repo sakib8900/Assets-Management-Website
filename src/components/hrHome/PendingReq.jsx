@@ -29,7 +29,7 @@ const PendingReq = () => {
   }
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 bg-yellow-200">
       <SharedTitle
         heading="Pending Request"
         subHeading="Review and manage employee requests awaiting your approval to ensure seamless operations."

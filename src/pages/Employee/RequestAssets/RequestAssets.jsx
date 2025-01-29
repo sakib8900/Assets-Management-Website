@@ -143,7 +143,6 @@ const RequestAssets = () => {
                                             onClick={() => openModal(asset)}
                                         >
                                             <FaBox />
-                                            Request
                                         </button>
                                     </td>
                                 </tr>

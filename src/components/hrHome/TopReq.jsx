@@ -21,7 +21,7 @@ const TopReq = () => {
   }, []);
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 bg-blue-200 mt-8">
       {/* Title */}
       <SharedTitle
         heading="Top Requested Items"

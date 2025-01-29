@@ -34,7 +34,7 @@ const Chart = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 bg-blue-200 mt-8">
       <div className="flex flex-col md:flex-row items-center justify-between gap-8">
         {/* Pie Chart on Left */}
         <div className="w-full md:w-1/2 flex justify-center">
