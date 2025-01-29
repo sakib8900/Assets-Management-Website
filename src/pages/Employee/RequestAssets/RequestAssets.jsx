@@ -5,6 +5,8 @@ import { useContext } from 'react';
 import { AuthContext } from '../../../providers/AuthProvider';
 import Swal from 'sweetalert2';
 import SharedTitle from '../../../Shared/SharedTitle/SharedTitle';
+import Loading from '../../../Shared/Loading/Loading';
+import { Helmet } from 'react-helmet';
 
 const RequestAssets = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -74,6 +76,9 @@ const RequestAssets = () => {
     };
     return (
         <div className="container mx-auto p-4">
+            <Helmet>
+                <title>Asset Management || Request For Assets</title>
+            </Helmet>
             <SharedTitle heading="Request Assets"></SharedTitle>
 
             {/* Filters */}
@@ -107,9 +112,7 @@ const RequestAssets = () => {
 
             {/* Asset Table */}
             {loading ? (
-                <div className="flex justify-center items-center">
-                    <button className="btn btn-primary loading">Loading...</button>
-                </div>
+               <Loading />
             ) : (
                 <div className="overflow-x-auto">
                     <table className="table w-full">
@@ -119,7 +122,6 @@ const RequestAssets = () => {
                                 <th>Asset Name</th>
                                 <th>Asset Type</th>
                                 <th>Status</th>
-                                <th>Requests</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -134,7 +136,6 @@ const RequestAssets = () => {
                                             {asset.quantity > 0 ? 'Available' : 'Unavailable'}
                                         </span>
                                     </td>
-                                    <td>{asset.requestCount || 0}</td>
                                     <td>
                                         <button
                                             className="btn btn-sm btn-primary flex items-center gap-2"

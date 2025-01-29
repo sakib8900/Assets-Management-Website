@@ -3,6 +3,7 @@ import { AuthContext } from '../../providers/AuthProvider';
 import { updateProfile } from 'firebase/auth';
 import Swal from 'sweetalert2';
 import { FaEdit } from 'react-icons/fa';
+import { Helmet } from 'react-helmet';
 
 const Profile = () => {
     const { user } = useContext(AuthContext);
@@ -34,6 +35,9 @@ const Profile = () => {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
+            <Helmet>
+                <title>Asset Management || Profile</title>
+            </Helmet>
             <div className="bg-white shadow-lg rounded-lg p-6 max-w-sm w-full">
                 <img
                     src={user?.photoURL || 'https://via.placeholder.com/150'}
@@ -58,9 +62,6 @@ const Profile = () => {
                     </div>
                 ) : (
                     <div className="flex flex-col items-center">
-                        {/* <h2 className="text-xl font-bold text-blue-600 text-center mb-2">
-                            Company Image
-                        </h2> */}
                         <h2 className="text-xl font-semibold text-center mb-2">
                             Your Name: {user?.displayName || "Anonymous User"}
                         </h2>

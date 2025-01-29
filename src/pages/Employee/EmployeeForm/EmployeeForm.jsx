@@ -50,15 +50,12 @@ const EmployeeForm = () => {
       }
       const userCredential = await createUser(formData.email, formData.password);
       await updateUserProfile(formData.displayName, photoURL);
-
       const payload = {
         displayName: formData.displayName,
         email: formData.email,
         photoURL: photoURL,
         dob: formData.dob
       };
-
-      // Send join request to HR
       const response = await fetch("https://asset-management-system-server-one.vercel.app/employeeJoinReq", {
         method: "POST",
         headers: {

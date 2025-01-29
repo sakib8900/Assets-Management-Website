@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Helmet } from "react-helmet";
+import SharedTitle from "../../../Shared/SharedTitle/SharedTitle";
+import Swal from "sweetalert2";
 
 const MyEmployee = () => {
   const [employees, setEmployees] = useState([]);
@@ -16,25 +19,44 @@ const MyEmployee = () => {
   }, []);
 
   const handleRemove = (id) => {
-    axios
-      .delete(`https://asset-management-system-server-one.vercel.app/employee/${id}`)
-      .then(() => {
-        setEmployees(employees.filter((employee) => employee._id !== id));
-      })
-      .catch((error) => {
-        console.error("There was an error removing the employee!", error);
-      });
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this employee!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`https://asset-management-system-server-one.vercel.app/employee/${id}`)
+          .then(() => {
+            setEmployees(employees.filter((employee) => employee._id !== id));
+            Swal.fire("Deleted!", "The employee has been removed.", "success");
+          })
+          .catch((error) => {
+            console.error("Error removing employee:", error);
+            Swal.fire("Error!", "Failed to remove the employee.", "error");
+          });
+      }
+    });
   };
+
+
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold text-center mb-6">My Employees</h1>
+      <Helmet>
+        <title>Asset Management || My Employee</title>
+      </Helmet>
+      <SharedTitle heading="my employees"></SharedTitle>
       <div className="overflow-x-auto">
         <table className="table w-full border">
           {/* Table Head */}
           <thead>
             <tr className="bg-gray-100">
-                <th className="p-3 text-left">#</th>
+              <th className="p-3 text-left">#</th>
               <th className="p-3 text-left">Name</th>
               <th className="p-3 text-left">Role</th>
               <th className="p-3 text-left">Action</th>
@@ -43,9 +65,9 @@ const MyEmployee = () => {
 
           {/* Table Body */}
           <tbody>
-            {employees.map((employee,idx) => (
+            {employees.map((employee, idx) => (
               <tr key={employee._id} className="border-b hover:bg-gray-50">
-                <td>{idx+1}</td>
+                <td>{idx + 1}</td>
                 <td className="p-3">{employee.displayName}</td>
                 <td className="p-3">{employee.email}</td>
                 <td className="p-3">{employee.role}</td>

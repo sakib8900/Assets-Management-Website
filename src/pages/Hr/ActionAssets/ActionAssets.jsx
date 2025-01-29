@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import ReactPaginate from 'react-paginate';
 import SharedTitle from '../../../Shared/SharedTitle/SharedTitle';
+import Loading from '../../../Shared/Loading/Loading';
+import { Helmet } from 'react-helmet';
+import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 
 const ActionAssets = () => {
     const [requests, setRequests] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(0);
+    const itemsPerPage = 10; // Show 10 items per page
 
     useEffect(() => {
         fetchRequests();
@@ -26,9 +32,7 @@ const ActionAssets = () => {
         try {
             const response = await fetch(`https://asset-management-system-server-one.vercel.app/myAssets/${requestId}`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status: 'approved' }),
             });
 
@@ -44,9 +48,7 @@ const ActionAssets = () => {
         try {
             const response = await fetch(`https://asset-management-system-server-one.vercel.app/myAssets/${requestId}`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status: 'rejected' }),
             });
 
@@ -58,19 +60,27 @@ const ActionAssets = () => {
         }
     };
 
+    // Filtered Data Based on Search
     const filteredRequests = requests.filter((request) =>
         request.requesterName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         request.requesterEmail?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    // Pagination Logic
+    const pageCount = Math.ceil(filteredRequests.length / itemsPerPage);
+    const handlePageClick = ({ selected }) => setCurrentPage(selected);
+    const startIndex = currentPage * itemsPerPage;
+    const paginatedRequests = filteredRequests.slice(startIndex, startIndex + itemsPerPage);
+
     return (
         <div className="container mx-auto p-4">
-            {/* Card Header */}
-            <SharedTitle heading={'Manage asset requests'} subHeading={'Approve Employee Request'}>Asset Requests
+            <Helmet>
+                <title>Asset Management || Approve / Reject Assets</title>
+            </Helmet>
 
-            </SharedTitle>
+            <SharedTitle heading={'Manage asset requests'} subHeading={'Approve Employee Request'} />
 
-            {/* Search Section */}
+            {/* Search Input */}
             <div className="form-control mb-6">
                 <input
                     type="text"
@@ -83,14 +93,13 @@ const ActionAssets = () => {
 
             {/* Requests List */}
             {loading ? (
-                <div className="flex justify-center items-center">
-                    <button className="btn btn-primary loading">Loading...</button>
-                </div>
+                <Loading />
             ) : (
                 <div className="overflow-x-auto">
                     <table className="table w-full">
                         <thead>
                             <tr className="bg-base-200">
+                                <th>#</th>
                                 <th>Asset Name</th>
                                 <th>Asset Type</th>
                                 <th>Requester</th>
@@ -101,19 +110,16 @@ const ActionAssets = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredRequests.map((request) => (
+                            {paginatedRequests.map((request, idx) => (
                                 <tr key={request._id}>
+                                    <td>{startIndex + idx + 1}</td>
                                     <td>{request.assetName}</td>
                                     <td>{request.assetType}</td>
                                     <td>
                                         <div className="font-bold">{request.requesterName}</div>
-                                        <div className="text-sm text-gray-500">
-                                            {request.requesterEmail}
-                                        </div>
+                                        <div className="text-sm text-gray-500">{request.requesterEmail}</div>
                                     </td>
-                                    <td>
-                                        {new Date(request.requestDate).toLocaleDateString()}
-                                    </td>
+                                    <td>{new Date(request.requestDate).toLocaleDateString()}</td>
                                     <td>
                                         <span
                                             className={`badge ${
@@ -137,13 +143,13 @@ const ActionAssets = () => {
                                                     onClick={() => handleApprove(request._id)}
                                                     className="btn btn-success btn-sm"
                                                 >
-                                                    Approve
+                                                    <AiOutlineCheck></AiOutlineCheck>
                                                 </button>
                                                 <button
                                                     onClick={() => handleReject(request._id)}
                                                     className="btn btn-error btn-sm"
                                                 >
-                                                    Reject
+                                                    <AiOutlineClose></AiOutlineClose>
                                                 </button>
                                             </div>
                                         )}
@@ -152,6 +158,26 @@ const ActionAssets = () => {
                             ))}
                         </tbody>
                     </table>
+
+                    {/* Pagination Controls */}
+                    <div className="flex justify-center mt-6">
+                        <ReactPaginate
+                            previousLabel={'←'}
+                            nextLabel={'→'}
+                            breakLabel={'...'}
+                            pageCount={pageCount}
+                            marginPagesDisplayed={1}
+                            pageRangeDisplayed={3}
+                            onPageChange={handlePageClick}
+                            containerClassName={'flex space-x-2'}
+                            pageClassName={'px-3 py-2 rounded-lg border bg-gray-200 hover:bg-gray-300 cursor-pointer'}
+                            previousClassName={'px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600'}
+                            nextClassName={'px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600'}
+                            breakClassName={'px-3 py-2'}
+                            disabledClassName={'opacity-50 cursor-not-allowed'}
+                            activeClassName={'bg-blue-500 text-white'}
+                        />
+                    </div>
                 </div>
             )}
         </div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet";
 
 
 const AddAssets = () => {
@@ -39,6 +40,9 @@ const AddAssets = () => {
 
   return (
     <div className="p-6 bg-gray-100 rounded-lg shadow-lg max-w-md mx-auto mt-10">
+      <Helmet>
+                <title>Asset Management || Add Assets</title>
+            </Helmet>
       <h2 className="text-2xl font-bold text-center mb-6">Add New Asset</h2>
       <form className="space-y-4" onSubmit={handleSubmit}>
         {/* Name Input */}

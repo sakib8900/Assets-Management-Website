@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import { AuthContext } from '../../providers/AuthProvider';
 import { useQuery } from '@tanstack/react-query';
@@ -38,17 +38,17 @@ const fetchUserRole = async (email) => {
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
-
+  const navigate = useNavigate()
   // Use Tanstack Query to fetch user role and data
   const { data, isLoading, isError } = useQuery({
     queryKey: ['userRole', user?.email],
     queryFn: () => fetchUserRole(user?.email),
-    enabled: !!user?.email, // Only fetch when user is logged in
+    enabled: !!user?.email,
   });
 
   const handleLogOut = () => {
     logOut().then(() => {
-      // Reset user data and role when logged out
+      navigate('/')
     });
   };
 
@@ -66,21 +66,21 @@ const Navbar = () => {
     }
 
     if (isLoading) {
-      return <div>Loading...</div>; // Show loading state if the query is in progress
+      return <div>Loading...</div>;
     }
 
     if (isError) {
-      return <div>Error loading role</div>; // Handle any error
+      return <div>Error loading role</div>;
     }
 
     const { role, data: userData } = data || {};
 
-    // If role is loaded, show role-specific links
     if (role === 'employee') {
       return [
         ...commonLinks,
         <NavLink key="my-assets" to="/myAssets">My Assets</NavLink>,
-        <NavLink key="request-assets" to="/requestAssets">Request for Assets</NavLink>
+        <NavLink key="request-assets" to="/requestAssets">Request for Assets</NavLink>,
+        <NavLink key="my-team" to="/myTeam">My Team</NavLink>
       ];
     }
 

@@ -5,6 +5,7 @@ import Loading from "../../../Shared/Loading/Loading";
 import Swal from "sweetalert2";
 import { useContext } from 'react';
 import { AuthContext } from '../../../providers/AuthProvider';
+import { Helmet } from "react-helmet";
 
 const AddEmployee = () => {
     const [employees, setEmployees] = useState([]);
@@ -150,6 +151,9 @@ const AddEmployee = () => {
 
     return (
         <div className="max-w-4xl mx-auto mt-10 p-6 border rounded-lg shadow-lg bg-white">
+            <Helmet>
+                <title>Asset Management || Add Employee</title>
+            </Helmet>
             <h1 className="text-2xl font-bold text-center mb-6">Employee Join Requests</h1>
             {hrData && (
                 <div className="mb-4 text-center">

@@ -5,14 +5,12 @@ import Loading from "../../Shared/Loading/Loading";
 
 const PendingReq = () => {
   const [pendingRequests, setPendingRequests] = useState([]);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch data using axios
     axios
       .get("https://asset-management-system-server-one.vercel.app/myAssets")
       .then((response) => {
-        // Filter only pending requests
         const pendingData = response.data.filter(
           (request) => request.status === "pending"
         );
@@ -22,7 +20,7 @@ const PendingReq = () => {
         console.error("Error fetching data:", error);
       })
       .finally(() => {
-        setLoading(false); // Stop loading after data fetch
+        setLoading(false);
       });
   }, []);
 

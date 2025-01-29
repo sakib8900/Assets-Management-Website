@@ -1,5 +1,5 @@
-// useAssets.js - Custom Hook
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const useAssets = (searchTerm = "", stockFilter = "", typeFilter = "", sortOption = "") => {
     const [assets, setAssets] = useState([]);
@@ -7,20 +7,20 @@ const useAssets = (searchTerm = "", stockFilter = "", typeFilter = "", sortOptio
 
     useEffect(() => {
         const fetchAssets = async () => {
+            setLoading(true);
             try {
                 const queryParams = new URLSearchParams({
                     ...(searchTerm && { search: searchTerm }),
                     ...(stockFilter && { stock: stockFilter }),
                     ...(typeFilter && { type: typeFilter }),
-                    ...(sortOption && { sort: sortOption })
+                    ...(sortOption && { sort: sortOption }),
                 });
 
-                const response = await fetch(`https://asset-management-system-server-one.vercel.app/assets?${queryParams}`);
-                const data = await response.json();
-                setAssets(data);
-                setLoading(false);
+                const response = await axios.get(`https://asset-management-system-server-one.vercel.app/assets?${queryParams}`);
+                setAssets(response.data);
             } catch (error) {
-                console.error('Error fetching assets:', error);
+                // console.error("Error fetching assets:", error);
+            } finally {
                 setLoading(false);
             }
         };

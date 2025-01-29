@@ -2,12 +2,17 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { FiCornerUpLeft } from "react-icons/fi";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet";
+import SharedTitle from "../../../Shared/SharedTitle/SharedTitle";
+import { set } from "react-hook-form";
+import Loading from "../../../Shared/Loading/Loading";
 
 const MyAssets = () => {
   const [assets, setAssets] = useState([]);
   const [disabledButtons, setDisabledButtons] = useState([]);
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (user && user.email) {
@@ -18,22 +23,27 @@ const MyAssets = () => {
             (asset) => asset.requesterEmail === user.email
           );
           setAssets(userAssets);
+          setLoading(false);
         })
         .catch((error) => {
           console.error("There was an error fetching the assets!", error);
         });
     }
   }, [user]);
-
   const handleReturn = (id) => {
     console.log(`Return asset with id: ${id}`);
     // TODO: Implement return asset logic
     setDisabledButtons((prevDisabled) => [...prevDisabled, id]);
   };
-
+  if (loading) {
+    return <Loading></Loading>
+  } 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold text-center my-6">My Assets</h1>
+      <Helmet>
+        <title>Asset Management || My Assets</title>
+      </Helmet>
+      <SharedTitle heading="My Assets"></SharedTitle>
       <table className="table w-full border">
         {/* Table Head */}
         <thead>
@@ -61,10 +71,10 @@ const MyAssets = () => {
                 <td className="p-3">
                   <span
                     className={`badge ${asset.status === "approved"
-                        ? "badge-success"
-                        : asset.status === "rejected"
-                          ? "badge-error"
-                          : "badge-warning"
+                      ? "badge-success"
+                      : asset.status === "rejected"
+                        ? "badge-error"
+                        : "badge-warning"
                       }`}
                   >
                     {asset.status}
@@ -76,8 +86,8 @@ const MyAssets = () => {
                       onClick={() => handleReturn(asset._id)}
                       disabled={disabledButtons.includes(asset._id)}
                       className={`py-2 px-4 rounded ${disabledButtons.includes(asset._id)
-                          ? "bg-gray-400 text-gray-700 cursor-not-allowed"
-                          : "bg-blue-500 hover:bg-blue-700 text-white"
+                        ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+                        : "bg-blue-500 hover:bg-blue-700 text-white"
                         }`}
                     >
                       <FiCornerUpLeft></FiCornerUpLeft>

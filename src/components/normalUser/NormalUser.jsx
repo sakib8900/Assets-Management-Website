@@ -1,22 +1,15 @@
 import React from "react";
 import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // Include carousel styles
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import img1 from "../../assets/normalUser/normalUser (1).jpeg";
 import img2 from "../../assets/normalUser/normalUser (2).jpeg";
 
 const NormalUser = () => {
   return (
     <div className="w-full max-w-6xl mx-auto py-8 px-4">
-      <Carousel
-        showArrows={true}
-        autoPlay={true}
-        infiniteLoop={true}
-        showThumbs={false}
-        showStatus={false}
-        className="rounded-lg shadow-lg"
-      >
+      <Carousel>
         {/* 1st Slide */}
-        <div className="flex flex-col md:flex-row items-center gap-6 bg-base-100 p-6 rounded-lg">
+        <div className="flex flex-col md:flex-row items-center gap-6 bg-blue-200 p-6 rounded-lg">
           <div className="text-center md:text-left">
             <h1 className="text-3xl md:text-4xl font-bold">
               Empower Your Team, Manage Your Assets with Ease!
@@ -37,7 +30,7 @@ const NormalUser = () => {
         </div>
 
         {/* 2nd Slide */}
-        <div className="flex flex-col md:flex-row items-center gap-6 bg-base-100 p-6 rounded-lg">
+        <div className="flex flex-col md:flex-row items-center gap-6 bg-blue-200 p-6 rounded-lg">
           <div className="text-center md:text-left">
             <h1 className="text-3xl md:text-4xl font-bold">
               Seamless Access to the Tools You Need!
