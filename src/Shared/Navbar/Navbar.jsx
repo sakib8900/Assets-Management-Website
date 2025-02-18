@@ -101,7 +101,7 @@ const Navbar = () => {
   const { role, data: userData } = data || {};
 
   return (
-    <div className="navbar bg-blue-300">
+    <div className="navbar bg-blue-300 md:px-2 lg:px-8">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

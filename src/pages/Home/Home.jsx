@@ -88,12 +88,14 @@ const Home = () => {
             {role === "hr" && (
                 <>
                     <NormalUser />
+                    <div className="mx-8">
                     <PendingReq />
                     <TopReq></TopReq>
                     <LimitedStock></LimitedStock>
                     <Chart />
                     <OurCom />
                     <OurEmployee />
+                    </div>
                 </>
             )}
 

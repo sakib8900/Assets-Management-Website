@@ -13,11 +13,10 @@ const HrForm = () => {
   const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm();
   const navigate = useNavigate();
   const photoURLFile = watch("photoURL");
-
+  
   const handleImageUpload = async (file, fieldName) => {
     const formData = new FormData();
     formData.append("image", file);
-
     try {
       const res = await axiosPublic.post(image_hosting_api, formData);
       if (res.data.success) {

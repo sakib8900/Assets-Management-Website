@@ -21,7 +21,7 @@ const TopReq = () => {
   }, []);
 
   return (
-    <div className="container mx-auto p-6 bg-blue-200 mt-8">
+    <div className="container mx-auto p-6 mt-8">
       {/* Title */}
       <SharedTitle
         heading="Top Requested Items"
@@ -34,7 +34,7 @@ const TopReq = () => {
           <img
             src={topReq}
             alt="Top Requested Items"
-            className="w-full max-w-[400px] object-contain"
+            className="w-full md:mt-20 lg:mt-0 max-w-[400px] object-contain"
           />
         </div>
 

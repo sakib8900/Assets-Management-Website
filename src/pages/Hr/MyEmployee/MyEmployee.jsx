@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import SharedTitle from "../../../Shared/SharedTitle/SharedTitle";
 import Swal from "sweetalert2";
 import Loading from "../../../Shared/Loading/Loading";
+import { FaX } from "react-icons/fa6";
 
 const MyEmployee = () => {
   const [employees, setEmployees] = useState([]);
@@ -61,6 +62,7 @@ const MyEmployee = () => {
             <tr className="bg-gray-100">
               <th className="p-3 text-left">#</th>
               <th className="p-3 text-left">Name</th>
+              <th className="p-3 text-left">Email</th>
               <th className="p-3 text-left">Role</th>
               <th className="p-3 text-left">Action</th>
             </tr>
@@ -79,7 +81,7 @@ const MyEmployee = () => {
                     onClick={() => handleRemove(employee._id)}
                     className="btn btn-sm btn-error"
                   >
-                    Remove
+                   <FaX />
                   </button>
                 </td>
               </tr>

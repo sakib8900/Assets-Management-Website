@@ -18,18 +18,17 @@ const LimitedStock = () => {
   }, []);
 
   return (
-    <div className="container mx-auto p-6 bg-yellow-200 mt-8">
+    <div className="container mx-auto p-6 mt-8">
       {/* Title */}
       <SharedTitle
         heading="Limited Stock"
         subHeading="Keep track of assets running low to ensure timely restocking and uninterrupted resource availability."
       />
-
       {/* Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-6 mt-6">
         {limitedStock.length > 0 ? (
           limitedStock.map((item) => (
-            <div key={item._id} className="bg-white shadow-lg rounded-lg p-4 border">
+            <div key={item._id} className="shadow-lg rounded-lg bg-yellow-200 p-4 border">
               <h2 className="text-lg font-bold mb-2">{item.name}</h2>
               <p className="text-sm text-gray-600">
                 <strong>Type:</strong> {item.type}

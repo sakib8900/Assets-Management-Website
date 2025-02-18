@@ -29,7 +29,7 @@ const PendingReq = () => {
   }
 
   return (
-    <div className="container mx-auto p-6 bg-yellow-200">
+    <div className="container mx-auto p-6">
       <SharedTitle
         heading="Pending Request"
         subHeading="Review and manage employee requests awaiting your approval to ensure seamless operations."
@@ -39,7 +39,7 @@ const PendingReq = () => {
           pendingRequests.slice(0, 6).map((request) => (
             <div
               key={request._id}
-              className="card bg-base-100 shadow-md p-4 border rounded-lg"
+              className="card bg-yellow-200 shadow-md p-4 border rounded-lg "
             >
               <h2 className="text-lg font-bold mb-2">{request.assetName}</h2>
               <p className="text-sm text-gray-600 mb-1">

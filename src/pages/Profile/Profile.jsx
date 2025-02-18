@@ -34,11 +34,11 @@ const Profile = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
+        <div className="flex flex-col items-center justify-center min-h-screen p-6">
             <Helmet>
                 <title>Asset Management || Profile</title>
             </Helmet>
-            <div className="bg-white shadow-lg rounded-lg p-6 max-w-sm w-full">
+            <div className="bg-white border-2 shadow-lg rounded-lg p-6 max-w-sm w-full">
                 <img
                     src={user?.photoURL || 'https://via.placeholder.com/150'}
                     alt="User Profile"
