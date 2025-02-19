@@ -17,6 +17,8 @@ import ActionAssets from "../pages/Hr/ActionAssets/ActionAssets";
 import MyAssets from "../pages/Employee/MyAssets/MyAssets";
 import MyEmployee from "../pages/Hr/MyEmployee/MyEmployee";
 import MyTeam from "../pages/Employee/MyTeam/MyTeam";
+import Chart from "../components/hrHome/Chart";
+import StatusChart from "../pages/Employee/MyAssets/StatusChart";
 
 
 export const router = createBrowserRouter([
@@ -49,6 +51,10 @@ export const router = createBrowserRouter([
         path: "hrForm",
         element:
           <HrForm></HrForm>
+      },
+      {
+        path: "typeChart",
+        element: <Chart></Chart>
       },
       {
         path: "assets",
@@ -88,12 +94,16 @@ export const router = createBrowserRouter([
         element: <EmployeeForm></EmployeeForm>
       },
       {
+        path: "statusChart",
+        element: <StatusChart></StatusChart>
+      },
+      {
         path: "myAssets",
         element: <PrivateRoute>
           <MyAssets></MyAssets>
         </PrivateRoute>
       },
-      // todo my team
+      //  my team
       {
         path: "myTeam",
         element: <MyTeam></MyTeam>

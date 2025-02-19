@@ -45,22 +45,42 @@ const Chart = () => {
         subHeading="Overview of returnable and non-returnable assets in the system."
       />
 
-      <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-        {/* Pie Chart on Left */}
-        <div className="w-full md:w-1/2 flex justify-center">
-          <div className="w-64 md:w-80">
-            <Pie data={data} />
-          </div>
-        </div>
-        {/* Description on Right */}
-        <div className="w-full md:w-3/4 p-3 rounded-lg text-center md:text-left">
-          <p className="mt-4">
+      <div className="flex flex-col lg:flex-row items-center gap-10">
+        {/* Left Section - Additional Info */}
+        <div className="w-full lg:w-1/3 text-center lg:text-left bg-gray-100 p-6 rounded-lg shadow">
+          <h3 className="text-xl font-semibold text-gray-700 mb-4">
+            Asset Summary
+          </h3>
+          <p>
             <span className="font-semibold text-green-600">Returnable:</span>{" "}
             {returnableCount}
           </p>
           <p>
             <span className="font-semibold text-red-600">Non-Returnable:</span>{" "}
             {nonReturnableCount}
+          </p>
+          <p className="mt-2 text-gray-600">
+            Returnable assets are reusable, while non-returnable assets are
+            consumable or permanent.
+          </p>
+        </div>
+
+        {/* Middle Section - Pie Chart */}
+        <div className="w-full lg:w-1/3 flex justify-center">
+          <div className="w-64 md:w-80">
+            <Pie data={data} />
+          </div>
+        </div>
+
+        {/* Right Section - Additional Insights */}
+        <div className="w-full lg:w-1/3 bg-blue-50 p-6 rounded-lg shadow">
+          <h3 className="text-xl font-semibold text-gray-700 mb-4">
+            Insights & Trends
+          </h3>
+          <p className="text-gray-600">
+            Track the distribution of assets in your system. A higher percentage
+            of returnable assets indicates cost efficiency, while non-returnable
+            assets might require budget adjustments.
           </p>
         </div>
       </div>

@@ -31,7 +31,7 @@ const MyAssets = () => {
     }
   }, [user]);
   const handleReturn = (id) => {
-    console.log(`Return asset with id: ${id}`);
+    // console.log(`Return asset with id: ${id}`);
     // TODO: Implement return asset logic
     setDisabledButtons((prevDisabled) => [...prevDisabled, id]);
   };
