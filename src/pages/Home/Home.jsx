@@ -103,10 +103,12 @@ const Home = () => {
             {role === "employee" && (
                 <>
                     <NormalUser />
+                    <div className="mx-8">
                     <PendingReqBanner />
                     <MonthReq />
                     <EmployeeBanner />
                     <EmployeeBanner2 />
+                    </div>
                 </>
             )}
         </div>

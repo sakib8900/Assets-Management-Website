@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const EmployeeBanner = () => {
     return (
-        <div className="bg-yellow-200 mt-8 p-4 md:p-12 rounded-lg shadow-lg flex flex-col items-center">
+        <div className="mt-8 p-4 md:p-12 rounded-lg shadow-lg flex flex-col items-center">
             {/* Heading */}
             <SharedTitle heading="need any assets ?"></SharedTitle>
 

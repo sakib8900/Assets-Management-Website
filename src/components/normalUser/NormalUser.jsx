@@ -9,7 +9,7 @@ const NormalUser = () => {
     <div className="w-full mx-auto">
       <Carousel>
         {/* 1st Slide */}
-        <div className="flex flex-col md:flex-row items-center gap-6 bg-blue-200 p-6">
+        <div className="flex flex-col md:flex-row items-center gap-6 bg-yellow-200 p-6">
           <div className="text-center md:text-left flex-1">
             <h1 className="text-3xl md:text-4xl font-bold">
               Empower Your Team, Manage Your Assets with Ease!

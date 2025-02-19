@@ -26,9 +26,9 @@ const PendingReqBanner = () => {
   }, [user]);
 
   return (
-    <div className="p-4 bg-yellow-200 rounded-md shadow-md max-w-4xl mx-auto">
+    <div className="p-4 rounded-md shadow-md mx-auto">
         <SharedTitle heading="your pending request list"></SharedTitle>
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-4 rounded-md bg-yellow-200 p-3">
         {/* Image */}
         <div className="flex-shrink-0">
           <img src={pending} alt="pending" className="w-24 h-24 md:w-32 md:h-32 object-cover" />

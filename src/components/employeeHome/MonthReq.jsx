@@ -37,7 +37,7 @@ const MonthReq = () => {
   }, [user, axiosSecure]);
 
   return (
-    <div className="bg-blue-100 p-6 rounded-md shadow-md mt-5">
+    <div className="p-6 rounded-md shadow-md mt-5">
       <SharedTitle heading="Requests This Month" />
       {/* 2 section */}
       <div className="flex flex-col md:flex-row items-center md:items-start">
