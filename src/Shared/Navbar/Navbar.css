@@ -31,7 +31,7 @@
     border-color: #3b82f6;
     background-color: #bfdbfe;
 }
-/* 🌙 Dark Mode */
+/*  Dark Mode */
 body.dark {
     background-color: #1a202c !important;
     color: #3b82f6 !important;
@@ -46,5 +46,5 @@ body.dark .navbar {
 body.dark .menu a:hover {
     color: #3b82f6 !important;
     border-color: #3b82f6 !important;
-    background-color: #ffe4e6 !important;
+    background-color: #72cad2 !important;
 }

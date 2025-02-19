@@ -236,18 +236,18 @@ const Navbar = () => {
 
             <button
               onClick={handleLogOut}
-              className="items-center px-3 py-2 backdrop-blur-md text-blue-500 text-lg font-semibold rounded-lg 
-                                             shadow-lg hover:text-white border-2 border-blue-500 
-                                             transition-all duration-300 hover:shadow-blue-500/50 
+              className="items-center px-3 py-2 backdrop-blur-md text-red-500 text-lg font-semibold rounded-lg 
+                                             shadow-lg hover:text-white border-2 border-red-500 
+                                             transition-all duration-300 hover:shadow-red-500/50 
                                              active:scale-95"
             >
               Logout
             </button>
           </div>
         ) : (
-          <button className="items-center px-3 py-2 backdrop-blur-md text-blue-500 text-lg font-semibold rounded-lg 
-                                             shadow-lg hover:text-white border-2 border-blue-500 
-                                             transition-all duration-300 hover:shadow-blue-500/50 
+          <button className="items-center px-3 py-2 backdrop-blur-md text-red-500 text-lg font-semibold rounded-lg 
+                                             shadow-lg hover:text-white border-2 border-red-500 
+                                             transition-all duration-300 hover:shadow-red-500/50 
                                              active:scale-95">
             <NavLink to="/login">Login</NavLink>
           </button>
