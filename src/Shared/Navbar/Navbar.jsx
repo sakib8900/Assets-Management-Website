@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { AuthContext } from "../../providers/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
-import logo from "../../assets/logo.webp";
+import logo from "../../assets/company1.jpeg";
+import { IoMoon, IoSunny } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
 
 // Fetch user role based on email
@@ -12,7 +13,6 @@ const fetchUserRole = async (email) => {
     fetch("https://asset-management-system-server-one.vercel.app/employee"),
     fetch("https://asset-management-system-server-one.vercel.app/hrManager"),
   ]);
-
   const [employeeData, hrData] = await Promise.all([
     employeeResponse.json(),
     hrResponse.json(),
@@ -40,13 +40,17 @@ const fetchUserRole = async (email) => {
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const navigate = useNavigate();
-  // Use Tanstack Query to fetch user role and data
+  const [dark, setDark] = useState(false);
+
   const { data, isLoading, isError } = useQuery({
     queryKey: ["userRole", user?.email],
     queryFn: () => fetchUserRole(user?.email),
     enabled: !!user?.email,
   });
-
+  const darkModeHandler = () => {
+    setDark(!dark);
+    document.body.classList.toggle("dark");
+  };
   const handleLogOut = () => {
     logOut().then(() => {
       navigate("/");
@@ -112,6 +116,15 @@ const Navbar = () => {
         <NavLink key="hr-form" to="/hrForm">
           Join as HR Manager
         </NavLink>,
+        <NavLink key="employee-guest" to="/employeeGuest">
+          Employee (Guest)
+        </NavLink>,
+        <NavLink key="hr-guest" to="/hrGuest">
+          HR Manager (Guest)
+        </NavLink>,
+        <NavLink key="contact" to="/contact">
+          Contact
+        </NavLink>,
       ];
     }
 
@@ -165,7 +178,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar sticky top-0 bg-blue-400 bg-opacity-80 backdrop-blur-md shadow-md md:px-5 transition-all duration-300 z-40">
+    <div className="navbar sticky top-0 bg-blue-400 bg-opacity-80 backdrop-blur-md shadow-md md:px-10 transition-all duration-300 z-40">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -190,7 +203,7 @@ const Navbar = () => {
         </div>
         <img
           src={user?.company?.logo || logo}
-          alt="Company Logo"
+          alt=""
           className="w-12 h-12 rounded-full"
         />
       </div>
@@ -200,6 +213,9 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-end">
+        <button onClick={darkModeHandler} className="btn btn-ghost">
+          {dark ? <IoSunny /> : <IoMoon />}
+        </button>
         {user ? (
           <div className="flex items-center gap-3">
             <div className="dropdown">
@@ -214,19 +230,25 @@ const Navbar = () => {
                 tabIndex={0}
                 className="dropdown-content menu bg-base-100 rounded-box z-[1] w-24 p-2 shadow"
               >
-                {info()} {/* Render info function */}
+                {info()}
               </ul>
             </div>
 
             <button
               onClick={handleLogOut}
-              className="px-2 py-3 bg-red-500 rounded-lg font-bold"
+              className="items-center px-3 py-2 backdrop-blur-md text-blue-500 text-lg font-semibold rounded-lg 
+                                             shadow-lg hover:text-white border-2 border-blue-500 
+                                             transition-all duration-300 hover:shadow-blue-500/50 
+                                             active:scale-95"
             >
               Logout
             </button>
           </div>
         ) : (
-          <button className="btn btn-error">
+          <button className="items-center px-3 py-2 backdrop-blur-md text-blue-500 text-lg font-semibold rounded-lg 
+                                             shadow-lg hover:text-white border-2 border-blue-500 
+                                             transition-all duration-300 hover:shadow-blue-500/50 
+                                             active:scale-95">
             <NavLink to="/login">Login</NavLink>
           </button>
         )}

@@ -39,7 +39,7 @@ const AddAssets = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-100 rounded-lg shadow-lg max-w-md mx-auto mt-10">
+    <div className="p-6 bg-gray-100 rounded-lg shadow-lg max-w-md mx-auto mt-10 mb-5">
       <Helmet>
                 <title>Asset Management || Add Assets</title>
             </Helmet>
@@ -107,7 +107,10 @@ const AddAssets = () => {
 
         {/* Submit Button */}
         <div className="form-control mt-4">
-          <button type="submit" className="btn btn-primary w-full">
+          <button type="submit" className="items-center px-6 py-2 backdrop-blur-md text-blue-500 text-lg font-semibold rounded-lg 
+                                             shadow-lg hover:bg-blue-500 hover:text-black border-2 border-blue-500 
+                                             transition-all duration-300 hover:shadow-blue-500/50 
+                                             active:scale-95">
             Add Asset
           </button>
         </div>

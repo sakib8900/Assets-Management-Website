@@ -19,6 +19,11 @@ import MyEmployee from "../pages/Hr/MyEmployee/MyEmployee";
 import MyTeam from "../pages/Employee/MyTeam/MyTeam";
 import Chart from "../components/hrHome/Chart";
 import StatusChart from "../pages/Employee/MyAssets/StatusChart";
+import HrGuest from "../pages/Guest/HrGuest";
+import EmployeeGuest from "../pages/Guest/EmployeeGuest";
+import Contact from "../components/About/Contact";
+import Privacy from "../components/About/Privacy";
+import Error from "../pages/Error/Error";
 
 
 export const router = createBrowserRouter([
@@ -31,8 +36,28 @@ export const router = createBrowserRouter([
         element: <Home></Home>
       },
       {
+        path: "*",
+        element: <Error></Error>
+      },
+      {
         path: "login",
         element: <Login></Login>
+      },
+      {
+        path: "hrGuest",
+        element: <HrGuest></HrGuest>
+      },
+      {
+        path: "privacy",
+        element: <Privacy></Privacy>
+      },
+      {
+        path: "employeeGuest",
+        element: <EmployeeGuest></EmployeeGuest>
+      },
+      {
+        path: "contact",
+        element: <Contact></Contact>
       },
       {
         path: "profile",
@@ -114,7 +139,7 @@ export const router = createBrowserRouter([
           <RequestAssets></RequestAssets>
         </PrivateRoute>
       },
-
+      
     ]
   },
 ]);

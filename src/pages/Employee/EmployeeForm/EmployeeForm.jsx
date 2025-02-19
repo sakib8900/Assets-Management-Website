@@ -89,7 +89,7 @@ const EmployeeForm = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 border rounded-lg shadow-lg bg-white">
+    <div className="max-w-md mx-auto mt-10 p-6 border rounded-lg shadow-lg mb-5 bg-white">
       <Helmet>
         <title>Assets Management || EmployeeForm</title>
       </Helmet>
@@ -181,7 +181,10 @@ const EmployeeForm = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full py-2 bg-blue-500 text-white font-medium rounded-md hover:bg-blue-600 transition ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`w-full items-center px-3 py-2 backdrop-blur-md text-blue-500 text-lg font-semibold rounded-lg 
+                                             shadow-lg hover:bg-blue-500 hover:text-black border-2 border-blue-500 
+                                             transition-all duration-300 hover:shadow-blue-500/50 
+                                             active:scale-95 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             {isLoading ? 'Signing up...' : 'Signup'}
           </button>

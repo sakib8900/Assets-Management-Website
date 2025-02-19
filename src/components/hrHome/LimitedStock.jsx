@@ -28,7 +28,7 @@ const LimitedStock = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-6 mt-6">
         {limitedStock.length > 0 ? (
           limitedStock.map((item) => (
-            <div key={item._id} className="shadow-lg rounded-lg bg-yellow-200 p-4 border">
+            <div key={item._id} className="shadow-lg rounded-lg bg-gray-100 p-4 border">
               <h2 className="text-lg font-bold mb-2">{item.name}</h2>
               <p className="text-sm text-gray-600">
                 <strong>Type:</strong> {item.type}

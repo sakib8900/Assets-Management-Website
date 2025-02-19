@@ -8,7 +8,7 @@ import { AuthContext } from "../../../providers/AuthProvider";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const StatusChart = () => {
-  const { user } = useContext(AuthContext); // Get the logged-in user's information
+  const { user } = useContext(AuthContext);
   const [approvedCount, setApprovedCount] = useState(0);
   const [pendingCount, setPendingCount] = useState(0);
 

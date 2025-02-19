@@ -19,14 +19,14 @@ const OurCom = () => {
   }, []);
 
   return (
-    <div className="w-full px-4 lg:px-8 py-6 bg-yellow-200 mt-8">
+    <div className="w-full px-4 lg:px-8 py-6 mt-8">
       <SharedTitle heading="Company Information" subHeading="Meet Our HR Manager"></SharedTitle>
       <div className="flex flex-wrap justify-center gap-6">
         {hrManagers.map((hrManager) =>
           hrManager.email === user.email ? (
             <div
               key={hrManager._id}
-              className="bg-white shadow-lg rounded-lg overflow-hidden p-6 w-full md:w-3/4 lg:w-2/3 xl:w-1/2 transform transition-all duration-300 hover:scale-105"
+              className="bg-gray-100 shadow-lg rounded-lg overflow-hidden p-6 w-full md:w-3/4 lg:w-2/3 xl:w-1/2 transform transition-all duration-300 hover:scale-105"
             >
               {/* Card Content */}
               <div className="flex flex-col md:flex-row items-center gap-6">

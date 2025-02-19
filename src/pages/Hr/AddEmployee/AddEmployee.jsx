@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { useContext } from 'react';
 import { AuthContext } from '../../../providers/AuthProvider';
 import { Helmet } from "react-helmet";
+import SharedTitle from "../../../Shared/SharedTitle/SharedTitle";
 
 const AddEmployee = () => {
     const [employees, setEmployees] = useState([]);
@@ -150,16 +151,16 @@ const AddEmployee = () => {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <div className="max-w-4xl mx-auto mt-10 p-6 border rounded-lg shadow-lg bg-white">
+        <div className="max-w-4xl mx-auto mt-10 p-6 border rounded-lg shadow-lg mb-4">
             <Helmet>
                 <title>Asset Management || Add Employee</title>
             </Helmet>
-            <h1 className="text-2xl font-bold text-center mb-6">Employee Join Requests</h1>
-            {hrData && (
+            <SharedTitle heading="Employee Join Requests" subHeading={hrData && (
                 <div className="mb-4 text-center">
                     <p>Team Members: {hrData.package.currentEmployees} / {hrData.package.limit}</p>
                 </div>
-            )}
+            )}></SharedTitle>
+            <h1 className="text-2xl font-bold text-center mb-6"></h1>
             <table className="w-full border-collapse border border-gray-300">
                 <thead>
                     <tr className="bg-gray-200">

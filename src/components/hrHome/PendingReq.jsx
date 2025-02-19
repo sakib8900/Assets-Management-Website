@@ -39,7 +39,7 @@ const PendingReq = () => {
           pendingRequests.slice(0, 6).map((request) => (
             <div
               key={request._id}
-              className="card bg-yellow-200 shadow-md p-4 border rounded-lg "
+              className="card bg-gray-100 shadow-md p-4 border rounded-lg "
             >
               <h2 className="text-lg font-bold mb-2">{request.assetName}</h2>
               <p className="text-sm text-gray-600 mb-1">

@@ -26,22 +26,24 @@ const PendingReqBanner = () => {
   }, [user]);
 
   return (
-    <div className="p-4 rounded-md shadow-md mx-auto">
-        <SharedTitle heading="your pending request list"></SharedTitle>
-      <div className="flex items-center space-x-4 rounded-md bg-yellow-200 p-3">
+    <div className="p-4 rounded-md shadow-md mx-auto max-w-3xl">
+      <SharedTitle heading="Your Pending Request List"></SharedTitle>
+
+      <div className="flex flex-col md:flex-row items-center space-x-0 md:space-x-4 rounded-md bg-gray-100 p-4">
         {/* Image */}
-        <div className="flex-shrink-0">
-          <img src={pending} alt="pending" className="w-24 h-24 md:w-32 md:h-32 object-cover" />
+        <div className="flex-shrink-0 mb-3 md:mb-0">
+          <img src={pending} alt="pending" className="w-24 h-24 md:w-32 md:h-32 object-cover rounded-lg" />
         </div>
+
         {/* Pending Requests List */}
         <div className="flex-1">
-          <h2 className="text-xl font-bold text-yellow-700">Pending Requests</h2>
+          <h2 className="text-lg md:text-xl font-bold text-yellow-700">Pending Requests</h2>
           {pendingRequests.length > 0 ? (
             <ul className="list-disc pl-5 mt-2 text-gray-700">
               {pendingRequests.map((asset) => (
-                <li key={asset._id}>
-                  {asset.assetName} - Requested on{" "}
-                  {new Date(asset.requestDate).toLocaleDateString()}
+                <li key={asset._id} className="mb-2">
+                  <span className="font-semibold">{asset.assetName}</span> - Requested on{" "}
+                  <span className="text-gray-600">{new Date(asset.requestDate).toLocaleDateString()}</span>
                 </li>
               ))}
             </ul>

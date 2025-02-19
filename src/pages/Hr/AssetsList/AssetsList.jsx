@@ -6,6 +6,7 @@ import useAssets from "../../../hooks/useAssets";
 import Loading from "../../../Shared/Loading/Loading";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import SharedTitle from "../../../Shared/SharedTitle/SharedTitle";
 
 const AssetsList = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -89,15 +90,11 @@ const AssetsList = () => {
     }
 
     return (
-        <div>
+        <div className="mt-5">
             <Helmet>
                 <title>Asset Management || AssetsList</title>
             </Helmet>
-
-            <div>
-                <h2 className="text-3xl font-bold text-center my-4">Our Available Assets</h2>
-            </div>
-
+            <SharedTitle heading="Our Available Assets"></SharedTitle>
             {/* Search Section */}
             <div className="my-4">
                 <input

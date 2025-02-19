@@ -31,3 +31,20 @@
     border-color: #3b82f6;
     background-color: #bfdbfe;
 }
+/* 🌙 Dark Mode */
+body.dark {
+    background-color: #1a202c !important;
+    color: #3b82f6 !important;
+}
+body.dark a {
+    color: #3b82f6;
+}
+body.dark .navbar {
+    background-color: #2d3748 !important;
+}
+
+body.dark .menu a:hover {
+    color: #3b82f6 !important;
+    border-color: #3b82f6 !important;
+    background-color: #ffe4e6 !important;
+}

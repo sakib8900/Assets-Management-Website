@@ -33,7 +33,7 @@ const HrForm = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto mt-10 p-5 border rounded-lg shadow-lg bg-white">
+    <div className="max-w-lg mx-auto mt-10 p-5 border rounded-lg shadow-lg mb-5 bg-white">
       <Helmet>
         <title>Asset Management || HR Form</title>
       </Helmet>
@@ -160,7 +160,10 @@ const HrForm = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full py-2 px-4 rounded bg-blue-500 hover:bg-blue-700 text-white"
+          className="w-full items-center px-3 py-2 backdrop-blur-md text-blue-500 text-lg font-semibold rounded-lg 
+                                             shadow-lg hover:bg-blue-500 hover:text-black border-2 border-blue-500 
+                                             transition-all duration-300 hover:shadow-blue-500/50 
+                                             active:scale-95"
         >
           Proceed to Payment
         </button>

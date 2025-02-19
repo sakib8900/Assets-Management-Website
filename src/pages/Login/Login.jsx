@@ -118,7 +118,10 @@ const Login = () => {
                         
                         <div className="form-control mt-6">
                             <button 
-                                className={`btn btn-primary ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                className={`items-center px-3 py-2 backdrop-blur-md text-blue-500 text-lg font-semibold rounded-lg 
+                                             shadow-lg hover:bg-blue-500 hover:text-black border-2 border-blue-500 
+                                             transition-all duration-300 hover:shadow-blue-500/50 
+                                             active:scale-95 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 type="submit"
                                 disabled={isLoading}
                             >
